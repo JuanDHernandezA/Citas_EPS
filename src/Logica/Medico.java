@@ -8,19 +8,17 @@ package Logica;
  *
  * @author JDiego
  */
-public class Paciente extends Usuario{
+public class Medico extends Usuario {
     
-    private Categoria categoria;
+    //falta agenda
+    private String registro_profesional;
+    private Especialidad especialidad;
     
-    public void pedir_cita(){
+    public void abrir_agenda(){
         
     }
     
-    public void cancelar_cita(){
-        
-    }
-    
-    public void visualizar_citas(){
+    public void atender_cita(){
         
     }
 }

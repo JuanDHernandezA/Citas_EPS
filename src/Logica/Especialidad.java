@@ -8,19 +8,16 @@ package Logica;
  *
  * @author JDiego
  */
-public class Paciente extends Usuario{
+public class Especialidad {
     
-    private Categoria categoria;
-    
-    public void pedir_cita(){
-        
+    private String nombre;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
     
-    public void cancelar_cita(){
-        
-    }
-    
-    public void visualizar_citas(){
-        
-    }
 }

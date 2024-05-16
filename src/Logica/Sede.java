@@ -4,23 +4,16 @@
  */
 package Logica;
 
+import java.util.List;
+
 /**
  *
  * @author JDiego
  */
-public class Paciente extends Usuario{
+public class Sede {
     
-    private Categoria categoria;
+    private String nombre;
+    private List<Consultorio> consultorios;
     
-    public void pedir_cita(){
-        
-    }
     
-    public void cancelar_cita(){
-        
-    }
-    
-    public void visualizar_citas(){
-        
-    }
 }

@@ -4,23 +4,17 @@
  */
 package Logica;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author JDiego
  */
-public class Paciente extends Usuario{
+public class Agenda {
     
-    private Categoria categoria;
+    private Date fecha_inicio;
+    private Date fecha_fin;
+    private List<Cita> citas;
     
-    public void pedir_cita(){
-        
-    }
-    
-    public void cancelar_cita(){
-        
-    }
-    
-    public void visualizar_citas(){
-        
-    }
 }

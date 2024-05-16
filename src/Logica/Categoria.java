@@ -8,19 +8,8 @@ package Logica;
  *
  * @author JDiego
  */
-public class Paciente extends Usuario{
+public class Categoria {
     
-    private Categoria categoria;
+    private String nombre;
     
-    public void pedir_cita(){
-        
-    }
-    
-    public void cancelar_cita(){
-        
-    }
-    
-    public void visualizar_citas(){
-        
-    }
 }
