@@ -22,7 +22,7 @@ public class MedicoDAO {
     }
     
     public void insertarMedico(Medico medico) throws SQLException {
-        String statement = "INSERT INTO medico VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String statement = "INSERT INTO medico VALUES (?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement pg = cn.getConexion().prepareStatement(statement);
         pg.setInt(1, medico.getTd().getId());
         pg.setString(2, medico.getIdentificacion());
@@ -34,7 +34,6 @@ public class MedicoDAO {
         pg.setString(8, medico.getRegistro_profesional());
         pg.setInt(9, medico.getGenero().getId());
         pg.setInt(10, medico.getEspecialidad().getId());
-        pg.setInt(11, medico.getJornada().getId());
         pg.executeUpdate();
         pg.close();
     }
