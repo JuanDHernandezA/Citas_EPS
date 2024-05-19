@@ -53,4 +53,12 @@ public class EspecialidadDAO {
         ResultSet rg = pg.executeQuery();
         return rg;
     }
+    
+    public void insertarEspecialidad(Especialidad esp) throws SQLException {
+        String statement = "INSERT INTO especialidad(nombre_esp) VALUES (?)";
+        PreparedStatement pg = cn.getConexion().prepareStatement(statement);
+        pg.setString(1, esp.getNombre());
+        pg.executeUpdate();
+        pg.close();
+    }
 }

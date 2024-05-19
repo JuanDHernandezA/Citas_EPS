@@ -172,7 +172,8 @@ public class VenMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegConsultorioActionPerformed
 
     private void BtnRegEspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegEspActionPerformed
-        // TODO add your handling code here:
+        new VenRegistroEspecialidad();
+        dispose();
     }//GEN-LAST:event_BtnRegEspActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

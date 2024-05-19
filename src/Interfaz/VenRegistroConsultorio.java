@@ -165,7 +165,6 @@ public class VenRegistroConsultorio extends javax.swing.JFrame {
         }
         
         try {
-            
             con.setNumero(Integer.parseInt(txtNumeroCon.getText()));
             consultorioDAO.insertarConsultorio(con);
 
