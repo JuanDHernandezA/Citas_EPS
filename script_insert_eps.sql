@@ -34,8 +34,10 @@ INSERT INTO administrador VALUES
 	('1234','Admin','EPS','eps@gmail.com','5551234','1980-04-23',1);
 	
 INSERT INTO jornada(nombre_jornada,hora_inicio,hora_fin) VALUES
-	('DIURNA','06:00:00','12:00:00')
+	('DIURNA','06:00:00','12:00:00'),
+	('TARDE','12:00:00','18:00:00');
 
+	
 SELECT * FROM genero;
 SELECT * FROM estado;
 SELECT * FROM categoria;
