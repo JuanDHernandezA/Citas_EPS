@@ -155,8 +155,7 @@ public class VenMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegPacienteActionPerformed
 
     private void BtnRegMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegMedicoActionPerformed
-        //Registrar_medico rm = new Registrar_medico();
-        //rm.setVisible(true);
+        new VenRegistroMedico();
         dispose();
     }//GEN-LAST:event_BtnRegMedicoActionPerformed
 

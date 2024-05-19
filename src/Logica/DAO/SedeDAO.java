@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class SedeDAO {
 
-    //SEDES
     ConexionBD cn;
 
     public SedeDAO() {

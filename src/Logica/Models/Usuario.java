@@ -4,7 +4,7 @@
  */
 package Logica.Models;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -12,14 +12,26 @@ import java.util.Date;
  */
 public abstract class Usuario {
     
+    private TipoDocumento td;
     private String nombre;
     private String apellido;
     private String identificacion;
     private String correo;
     private String telefono;
     private Date fecha_nacimiento;
-    private String genero;
+    private Genero genero;
 
+    /*public Usuario(TipoDocumento td, String nombre, String apellido, String identificacion, String correo, String telefono, Date fecha_nacimiento, Genero genero) {
+        this.td = td;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.identificacion = identificacion;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.genero = genero;
+    }*/
+    
     public String getNombre() {
         return nombre;
     }
@@ -56,6 +68,14 @@ public abstract class Usuario {
         return telefono;
     }
 
+    public TipoDocumento getTd() {
+        return td;
+    }
+
+    public void setTd(TipoDocumento td) {
+        this.td = td;
+    }
+    
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
@@ -68,11 +88,11 @@ public abstract class Usuario {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public String getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
     

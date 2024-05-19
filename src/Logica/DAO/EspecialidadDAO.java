@@ -28,6 +28,8 @@ public class EspecialidadDAO {
 
         List<Especialidad> sedes = new ArrayList<>();
 
+        
+        
         try {
             String statement = "SELECT * FROM especialidad";
             PreparedStatement pg = cn.getConexion().prepareStatement(statement);

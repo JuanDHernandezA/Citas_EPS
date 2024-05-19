@@ -4,6 +4,8 @@
  */
 package Logica.Models;
 
+import java.util.Date;
+
 /**
  *
  * @author JDiego
@@ -11,6 +13,10 @@ package Logica.Models;
 public class Paciente extends Usuario{
     
     private Categoria categoria;
+
+    /*public Paciente(TipoDocumento td, String nombre, String apellido, String identificacion, String correo, String telefono, Date fecha_nacimiento, Genero genero) {
+        super(td, nombre, apellido, identificacion, correo, telefono, fecha_nacimiento, genero);
+    }*/
     
     public void pedir_cita(){
         
