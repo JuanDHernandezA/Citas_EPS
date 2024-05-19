@@ -5,6 +5,10 @@
  */
 package Interfaz;
 
+import Logica.DAO.MedicoDAO;
+import Logica.DAO.PacienteDAO;
+import Logica.Models.Medico;
+import Logica.Models.Paciente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -15,6 +19,9 @@ import java.util.logging.Logger;
  * @author FliaSalinasRodriguez
  */
 public class VenMenuIngreso extends javax.swing.JFrame {
+
+    MedicoDAO medicoDAO = new MedicoDAO();
+    PacienteDAO pacienteDAO = new PacienteDAO();
 
     /**
      * Creates new form Menu
@@ -65,6 +72,7 @@ public class VenMenuIngreso extends javax.swing.JFrame {
         getContentPane().add(jLabel3);
         jLabel3.setBounds(50, 102, 170, 16);
 
+        BtnPaciente.setSelected(true);
         BtnPaciente.setText("Paciente");
         getContentPane().add(BtnPaciente);
         BtnPaciente.setBounds(50, 130, 130, 21);
@@ -96,30 +104,31 @@ public class VenMenuIngreso extends javax.swing.JFrame {
 
     private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
         try {
-            //ConsultasDB bd = new ConsultasDB();
-            //ResultSet res = bd.obtenerUsuario(Integer.parseInt(TxtId.getText()));
+            if (BtnMedico.isSelected()) {
 
-            //if (res.next()) { DESCOMENTAR PARA INGRESAR CON LOS USUARIOS
-            if (true) {
-                if (BtnMedico.isSelected()) {
-                    //MenuMedico med = new MenuMedico(Integer.parseInt(TxtId.getText()));
-                    //med.setVisible(true);
+                Medico m = medicoDAO.obtenerMedico(TxtId.getText());
+
+                if (m.getNombre() != null) {
+                    new VenMenuMedico(m);
                     dispose();
                 } else {
-                    if (BtnPaciente.isSelected()) {
-                        //MenuPaciente pac = new MenuPaciente();
-                        //pac.setVisible(true);
-                        dispose();
-                    } else {
-                        System.out.println("Sin Botón seleccionado");
-                    }
+                    System.out.println("Ese usuario no existe...");
                 }
-            } else {
-                System.out.println("Ese usuario no existe...");
+
+            } else if (BtnPaciente.isSelected()) {
+                
+                Paciente p = pacienteDAO.obtenerPaciente(TxtId.getText());
+                
+                if (p.getNombre() != null) {
+                    new VenMenuPaciente(p);
+                    dispose();
+                } else {
+                    System.out.println("Ese usuario no existe...");
+                }
             }
 
         } catch (Exception ex) {
-            System.out.println("No se pudo completar la operación... F");
+            System.out.println("No se pudo completar la operación...");
             System.out.println(ex);
         }
 

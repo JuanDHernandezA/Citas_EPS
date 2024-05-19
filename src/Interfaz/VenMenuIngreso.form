@@ -72,6 +72,7 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="BtnPaciente">
       <Properties>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Paciente"/>
       </Properties>
       <Constraints>

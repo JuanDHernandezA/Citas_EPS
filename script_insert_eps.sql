@@ -64,6 +64,7 @@ SELECT * FROM jornada;
 SELECT * FROM administrador;
 SELECT * FROM tipo_documento;
 SELECT * FROM medico;
+SELECT * FROM paciente;
 
 SELECT numero_con AS numero_consultorio, nombre_esp AS especialidad, nombre_sede FROM consultorio
 INNER JOIN especialidad ON consultorio.especialidad_id = especialidad.id_esp
