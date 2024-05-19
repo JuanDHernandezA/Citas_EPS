@@ -2,20 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package Logica.Models;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author JDiego
  */
-public class Administrador extends Usuario{
+public class Agenda {
     
-    public void registrar_medico(){
-        
-    }
-    
-    public void registrar_paciente(){
-        
-    }
+    private Date fecha_inicio;
+    private Date fecha_fin;
+    private List<Cita> citas;
     
 }

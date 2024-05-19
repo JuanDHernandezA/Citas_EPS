@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package Logica.Models;
 
 /**
  *
  * @author JDiego
  */
-public class Categoria {
+public class HistoriaClinica {
     
-    private String nombre;
-    
+    private String diagnostico;
+    private String tratamiento;
 }

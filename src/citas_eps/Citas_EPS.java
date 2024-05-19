@@ -4,7 +4,6 @@
  */
 package citas_eps;
 
-import BD.ConsultasDB;
 import Interfaz.VenMenuIngreso;
 import Interfaz.VenRegistroSede;
 import java.sql.ResultSet;

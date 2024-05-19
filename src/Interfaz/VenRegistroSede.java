@@ -4,8 +4,8 @@
  */
 package Interfaz;
 
-import BD.ConsultasDB;
-import Logica.Sede;
+import Logica.DAO.SedeDAO;
+import Logica.Models.Sede;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,8 +14,9 @@ import javax.swing.JOptionPane;
  */
 public class VenRegistroSede extends javax.swing.JFrame {
 
-    ConsultasDB db = new ConsultasDB();
-
+    //ConsultasDB db = new ConsultasDB();
+    SedeDAO sedeDAO = new SedeDAO();
+    
     /**
      * Creates new form VenRegistroSede
      */
@@ -118,12 +119,12 @@ public class VenRegistroSede extends javax.swing.JFrame {
 
     private void btnRegistrarSedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarSedeActionPerformed
         Sede sede = new Sede();
-
+        
         sede.setNombre(txtNombreSede.getText());
         sede.setDireccion(txtDireccionSede.getText());
 
         try {
-            db.insertarSede(sede);
+            sedeDAO.insertarSede(sede);
 
             //JOptionPane.showMessageDialog(null, "Paciente registrado correctamente", "Registrar paciente", JOptionPane.INFORMATION_MESSAGE, check);
             JOptionPane.showMessageDialog(null, "Sede registrada correctamente", "Registrar Sede", JOptionPane.INFORMATION_MESSAGE);

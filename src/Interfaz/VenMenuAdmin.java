@@ -5,6 +5,10 @@
  */
 package Interfaz;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author FliaSalinasRodriguez
@@ -162,7 +166,9 @@ public class VenMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegSedeActionPerformed
 
     private void BtnRegConsultorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegConsultorioActionPerformed
-        // TODO add your handling code here:
+        
+        new VenRegistroConsultorio();
+        dispose();
     }//GEN-LAST:event_BtnRegConsultorioActionPerformed
 
     private void BtnRegEspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegEspActionPerformed

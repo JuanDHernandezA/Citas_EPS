@@ -2,14 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package Logica.Models;
 
 /**
  *
  * @author JDiego
  */
-public class HistoriaClinica {
+public class Administrador extends Usuario{
     
-    private String diagnostico;
-    private String tratamiento;
+    public void registrar_medico(){
+        
+    }
+    
+    public void registrar_paciente(){
+        
+    }
+    
 }

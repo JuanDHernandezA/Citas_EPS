@@ -5,7 +5,6 @@
  */
 package Interfaz;
 
-import BD.ConsultasDB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -97,7 +96,7 @@ public class VenMenuIngreso extends javax.swing.JFrame {
 
     private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
         try {
-            ConsultasDB bd = new ConsultasDB();
+            //ConsultasDB bd = new ConsultasDB();
             //ResultSet res = bd.obtenerUsuario(Integer.parseInt(TxtId.getText()));
 
             //if (res.next()) { DESCOMENTAR PARA INGRESAR CON LOS USUARIOS

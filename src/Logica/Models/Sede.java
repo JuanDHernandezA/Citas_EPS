@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package Logica.Models;
 
 import java.util.List;
 
@@ -12,9 +12,19 @@ import java.util.List;
  */
 public class Sede {
     
+    private int id;
     private String nombre;
     private String direccion;
-    private List<Consultorio> consultorios;
+
+    public Sede(){
+        
+    }
+    
+    public Sede(int id, String nombre, String direccion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.direccion = direccion;
+    }
 
     public String getNombre() {
         return nombre;
@@ -30,6 +40,14 @@ public class Sede {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     
