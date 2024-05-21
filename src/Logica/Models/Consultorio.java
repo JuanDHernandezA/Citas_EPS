@@ -10,6 +10,7 @@ package Logica.Models;
  */
 public class Consultorio {
     
+    private int id;
     private int numero;
     private Especialidad especialidad;
     private Sede sede;
@@ -37,5 +38,14 @@ public class Consultorio {
     public void setSede(Sede sede) {
         this.sede = sede;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     
 }

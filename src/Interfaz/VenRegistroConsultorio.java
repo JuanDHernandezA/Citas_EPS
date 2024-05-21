@@ -166,7 +166,8 @@ public class VenRegistroConsultorio extends javax.swing.JFrame {
         
         try {
             con.setNumero(Integer.parseInt(txtNumeroCon.getText()));
-            consultorioDAO.insertarConsultorio(con);
+            
+            consultorioDAO.jornadaConsultorio(consultorioDAO.insertarConsultorio(con));
 
             //JOptionPane.showMessageDialog(null, "Paciente registrado correctamente", "Registrar paciente", JOptionPane.INFORMATION_MESSAGE, check);
             JOptionPane.showMessageDialog(null, "Consultorio registrado correctamente", "Registrar Consultorio", JOptionPane.INFORMATION_MESSAGE);
