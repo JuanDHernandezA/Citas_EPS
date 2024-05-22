@@ -15,6 +15,20 @@ public class Consultorio {
     private Especialidad especialidad;
     private Sede sede;
 
+    public Consultorio() {
+    }
+
+    public Consultorio(int id, int numero, Especialidad especialidad, Sede sede) {
+        this.id = id;
+        this.numero = numero;
+        this.especialidad = especialidad;
+        this.sede = sede;
+    }
+    
+    public Consultorio(int id) {
+        this.id = id;
+    }
+
     public int getNumero() {
         return numero;
     }

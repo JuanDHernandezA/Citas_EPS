@@ -58,6 +58,25 @@ public class ConsultorioDAO {
             pg.executeUpdate();
             pg.close();
         }
+    }
+    
+    public List obtenerConsultoriosEsp() throws SQLException{
+        
+        List<Consultorio> consultorios = new ArrayList<>();
 
+        try {
+            String statement = "SELECT * FROM especialidad WHERE especialidad_id = ?";
+            PreparedStatement pg = cn.getConexion().prepareStatement(statement);
+            ResultSet res = pg.executeQuery();
+
+            while (res.next()) {
+                consultorios.add(new Consultorio(res.getInt("id_esp")));
+            }
+
+            return consultorios;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
     }
 }

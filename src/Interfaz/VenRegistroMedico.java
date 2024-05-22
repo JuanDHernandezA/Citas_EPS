@@ -402,17 +402,16 @@ public class VenRegistroMedico extends javax.swing.JFrame {
         }
 
         try {
-            medicoDAO.insertarMedico(medico);
-            JOptionPane.showMessageDialog(null, "Médico registrado correctamente", "Registrar médico", JOptionPane.INFORMATION_MESSAGE);
-            /*con.insertarUsuario(id, tipo, txtCorreo.getText(),TxtSexo.getText(),
-                fecha, txtNombre.getText(), txtApellido.getText());
-            ResultSet cons = con.obtenerConsultorio(esp);
-            while(cons.next()){
-                con.actualizarConsultorio("NO DISPONIBLE", cons.getInt("k_numero_consultorio"));
-                con.insertarMedico(id, registro , tipo, esp);
-
-                break;
-            }*/
+            int[] ids = medicoDAO.insertarMedico(medico);
+            if(medicoDAO.asociarJornada(ids)){
+                JOptionPane.showMessageDialog(null, "Médico registrado correctamente", "Registrar médico", JOptionPane.INFORMATION_MESSAGE);
+                new VenMenuAdmin();
+                dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Registro fallido. No hay consultorios disponibles para la especialidad del médico", "Registrar médico", JOptionPane.INFORMATION_MESSAGE);
+                medicoDAO.borrarMedico(ids[0]);
+            }
 
         } catch (Exception ex) {
             System.out.println("Error SQL :v");

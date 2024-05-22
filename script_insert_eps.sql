@@ -65,6 +65,7 @@ SELECT * FROM administrador;
 SELECT * FROM tipo_documento;
 SELECT * FROM medico;
 SELECT * FROM paciente;
+SELECT * FROM jornada_consultorio;
 
 SELECT numero_con AS numero_consultorio, nombre_esp AS especialidad, nombre_sede FROM consultorio
 INNER JOIN especialidad ON consultorio.especialidad_id = especialidad.id_esp
@@ -73,3 +74,21 @@ INNER JOIN sede ON consultorio.sede_id = sede.id_sede;
 SELECT numero_con,nombre_jornada,medico_id FROM jornada_consultorio
 INNER JOIN jornada ON jornada.id_jornada = jornada_consultorio.jornada_id
 INNER JOIN consultorio ON consultorio.id_con = jornada_consultorio.consultorio_id;
+
+
+--UPDATE jornada_consultorio SET medico_id = ? WHERE jornada_id = ? AND consultorio_id = ?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
