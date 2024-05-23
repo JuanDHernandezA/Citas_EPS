@@ -10,6 +10,28 @@ package Logica.Models;
  */
 public class HistoriaClinica {
     
+    private int id;
     private String diagnostico;
     private String tratamiento;
+
+    public HistoriaClinica() {
+    }
+
+    public HistoriaClinica(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDiagnostico() {
+        return diagnostico;
+    }
+
+    public String getTratamiento() {
+        return tratamiento;
+    }
+    
+    
 }

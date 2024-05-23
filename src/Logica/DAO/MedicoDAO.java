@@ -32,8 +32,7 @@ public class MedicoDAO {
 
         Medico medico = new Medico();
 
-        PreparedStatement pg = cn.getConexion().prepareStatement("SELECT *"
-                + "FROM medico WHERE id_med = ?");
+        PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM medico WHERE id_med = ?");
 
         pg.setString(1, id);
         ResultSet res = pg.executeQuery();
@@ -84,7 +83,7 @@ public class MedicoDAO {
         boolean find = false;
 
         for (JornadaConsultorio jc : jornada_consultorio) {
-            if (jc.getMedico().getId() == 0) {
+            if (jc.getMedico().getIdentificacion()== null) {
                 String statement = "UPDATE jornada_consultorio SET medico_id = ? WHERE jornada_id = ? AND consultorio_id = ?";
                 PreparedStatement pg = cn.getConexion().prepareStatement(statement);
                 pg.setInt(1, medico[0]);

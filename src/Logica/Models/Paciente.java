@@ -18,6 +18,13 @@ public class Paciente extends Usuario{
         super(td, nombre, apellido, identificacion, correo, telefono, fecha_nacimiento, genero);
     }*/
 
+    public Paciente(String id) {
+        super(id);
+    }
+
+    public Paciente() {
+    }
+
     public Categoria getCategoria() {
         return categoria;
     }

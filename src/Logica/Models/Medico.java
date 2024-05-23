@@ -11,18 +11,15 @@ package Logica.Models;
 public class Medico extends Usuario {
     
     //falta agenda
-    private int id;
     private String registro_profesional;
     private Especialidad especialidad;
 
     public Medico() {
     }
 
-    public Medico(int id) {
-        this.id = id;
+    public Medico(String id) {
+        super(id);
     }
-
-    
     
     /*public Medico(TipoDocumento td, String nombre, String apellido, String identificacion, String correo, String telefono, Date fecha_nacimiento, Genero genero, String registro_profesional, Especialidad especialidad, Jornada jornada) {
         super(td, nombre, apellido, identificacion, correo, telefono, fecha_nacimiento, genero);
@@ -39,13 +36,6 @@ public class Medico extends Usuario {
         
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getRegistro_profesional() {
         return registro_profesional;

@@ -21,6 +21,15 @@ public abstract class Usuario {
     private Date fecha_nacimiento;
     private Genero genero;
 
+    public Usuario() {
+    }
+
+    public Usuario(String id) {
+        this.identificacion = id;
+    }
+
+    
+    
     /*public Usuario(TipoDocumento td, String nombre, String apellido, String identificacion, String correo, String telefono, Date fecha_nacimiento, Genero genero) {
         this.td = td;
         this.nombre = nombre;

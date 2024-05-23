@@ -42,4 +42,25 @@ public class JornadaDAO {
         }
 
     }
+    
+    public Jornada obtenerJornada(Jornada j) {
+
+        Jornada jornada = null;
+        
+        try {
+            String statement = "SELECT * FROM jornada WHERE id_jornada=?";
+            PreparedStatement pg = cn.getConexion().prepareStatement(statement);
+            pg.setInt(1, j.getId());
+            ResultSet res = pg.executeQuery();
+
+            while (res.next()) {
+                jornada = new Jornada(res.getInt("id_jornada"),res.getString("nombre_jornada"), res.getTime("hora_inicio").toLocalTime(), res.getTime("hora_fin").toLocalTime());
+            }
+            return jornada;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+
+    }
 }

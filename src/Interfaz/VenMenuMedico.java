@@ -23,6 +23,7 @@ public class VenMenuMedico extends javax.swing.JFrame {
         this.medico = medico;
         initComponents();
         setLocationRelativeTo(null);
+        jLabelMed.setText(jLabelMed.getText()+" "+medico.getNombre());
         setVisible(true);
     }
     
@@ -38,28 +39,28 @@ public class VenMenuMedico extends javax.swing.JFrame {
 
         BtnAgenda = new javax.swing.JButton();
         BtnCita = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelMed = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Médico");
 
-        BtnAgenda.setText("Abrir Agenda");
+        BtnAgenda.setText("Ver Agenda");
         BtnAgenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnAgendaActionPerformed(evt);
             }
         });
 
-        BtnCita.setText("Programar Cita");
+        BtnCita.setText("Abrir Agenda");
         BtnCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnCitaActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Bienvenido, Doctor");
+        jLabelMed.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelMed.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelMed.setText("Bienvenido, Doctor");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,17 +71,17 @@ public class VenMenuMedico extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(BtnCita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnAgenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelMed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addComponent(jLabelMed)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnAgenda)
                 .addGap(18, 18, 18)
@@ -92,13 +93,14 @@ public class VenMenuMedico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitaActionPerformed
-       /*Programar_cita c = new Programar_cita(this.getId_medico());
-       c.setVisible(true);
-       dispose();*/
+       new VenAbrirAgenda(medico);
+       dispose();
     }//GEN-LAST:event_BtnCitaActionPerformed
 
     private void BtnAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgendaActionPerformed
-       /*try {
+       new VenAgenda(medico);
+       dispose();
+        /*try {
             Agenda_Citas a = new Agenda_Citas(this.getId_medico());
             ConsultasBD bd = new ConsultasBD();
             bd.actualizarEstadoAgenda("abierto", this.getId_medico());
@@ -114,6 +116,6 @@ public class VenMenuMedico extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAgenda;
     private javax.swing.JButton BtnCita;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelMed;
     // End of variables declaration//GEN-END:variables
 }

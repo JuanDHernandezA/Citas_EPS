@@ -69,9 +69,32 @@ public class JornadaConsultorioDAO {
                 
                 jc.setJornada(new Jornada(res.getInt("jornada_id")));
                 jc.setConsultorio(new Consultorio(res.getInt("consultorio_id")));
-                jc.setMedico(new Medico(res.getInt("medico_id")));
+                jc.setMedico(new Medico(res.getString("medico_id")));
                 
                 jornada_consultorio.add(jc);
+            }
+
+            return jornada_consultorio;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+    
+    public JornadaConsultorio obtenerJCMed(Medico medico) {
+
+        JornadaConsultorio jornada_consultorio = new JornadaConsultorio();
+
+        try {
+            String statement = "SELECT * FROM jornada_consultorio WHERE medico_id = ?";
+            PreparedStatement pg = cn.getConexion().prepareStatement(statement);
+            pg.setString(1, medico.getIdentificacion());
+            ResultSet res = pg.executeQuery();
+
+            while (res.next()) {
+                jornada_consultorio.setJornada(new Jornada(res.getInt("jornada_id")));
+                jornada_consultorio.setConsultorio(new Consultorio(res.getInt("consultorio_id")));
+                jornada_consultorio.setMedico(new Medico(res.getString("medico_id")));
             }
 
             return jornada_consultorio;

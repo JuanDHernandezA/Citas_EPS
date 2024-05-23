@@ -24,6 +24,9 @@ public class Jornada {
         this.hora_fin = hora_fin;
     }
 
+    public Jornada() {
+    }
+
     public Jornada(int id) {
         this.id = id;
     }

@@ -10,5 +10,23 @@ package Logica.Models;
  */
 public class Estado {
     
+    private int id;
     private String estado;
+
+    public Estado() {
+    }
+
+    public Estado(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+    
+    
 }
