@@ -179,7 +179,18 @@ public class VenConsulCita extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnVolverActionPerformed
 
     private void BtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsultarActionPerformed
-        // TODO add your handling code here:
+        
+        try {
+            int id_cita = (int) tblCitas.getValueAt(tblCitas.getSelectedRow(), 5);
+            System.out.println(id_cita);
+            Cita c = citaDAO.obtenerCita(id_cita);
+            System.out.println(c.getPaciente().getIdentificacion());
+            new VenConHC(c,paciente);
+            dispose();
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_BtnConsultarActionPerformed
 
     private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed

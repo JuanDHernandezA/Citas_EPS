@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author alexh
  */
-public class VenAtenderCita extends javax.swing.JFrame {
+public class VenConHC extends javax.swing.JFrame {
 
     PacienteDAO pacienteDAO = new PacienteDAO();
     CitaDAO citaDAO = new CitaDAO();
@@ -26,9 +26,9 @@ public class VenAtenderCita extends javax.swing.JFrame {
 
     Cita cita;
     Paciente paciente;
-    Medico medico;
-    
-    public VenAtenderCita(Cita cita, Medico medico) {
+    HistoriaClinica hc;
+
+    public VenConHC(Cita cita, Paciente paciente) {
 
         initComponents();
         setLocationRelativeTo(null);
@@ -40,9 +40,14 @@ public class VenAtenderCita extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
+
+        txtPaciente.setText(txtPaciente.getText() + " " + paciente.getNombre() + " " + paciente.getApellido());
         
-       txtPaciente.setText(txtPaciente.getText() + " " + paciente.getNombre() + " " + paciente.getApellido());
+        hc = hcDAO.obtenerHC(cita.getHc().getId());
         
+        taDiagnostico.setText(hc.getDiagnostico());
+        taTratamiento.setText(hc.getTratamiento());
+
         setVisible(true);
     }
 
@@ -61,11 +66,10 @@ public class VenAtenderCita extends javax.swing.JFrame {
         txtPaciente = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        btnCancelar = new javax.swing.JButton();
-        btnRegistrar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         taTratamiento = new java.awt.TextArea();
         taDiagnostico = new java.awt.TextArea();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Diagnostico y prescripcion");
@@ -98,41 +102,29 @@ public class VenAtenderCita extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnCancelar.setText("Cancelar");
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 184, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 32, Short.MAX_VALUE)
+        );
+
+        jLabel2.setText("Prescripcion medica:");
+
+        taTratamiento.setEditable(false);
+
+        taDiagnostico.setEditable(false);
+
+        btnCancelar.setText("Volver");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
-
-        btnRegistrar.setText("Registrar");
-        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(btnCancelar)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(btnRegistrar)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnRegistrar))
-                .addGap(0, 9, Short.MAX_VALUE))
-        );
-
-        jLabel2.setText("Prescripcion medica:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -145,8 +137,10 @@ public class VenAtenderCita extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 307, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 233, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar))
                     .addComponent(taDiagnostico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(taTratamiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -160,7 +154,9 @@ public class VenAtenderCita extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(taTratamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar))
                 .addContainerGap())
         );
 
@@ -195,41 +191,14 @@ public class VenAtenderCita extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        
-        HistoriaClinica hc = new HistoriaClinica();
-        
-        hc.setDiagnostico(taDiagnostico.getText());
-        hc.setTratamiento(taTratamiento.getText());
-        
-        
-        try {
-            
-            citaDAO.insertarHC(hcDAO.insertarCita(hc), cita);
-            citaDAO.insertarEstado(3, cita);
-            
-            JOptionPane.showMessageDialog(null, "Historia Clinica registrada correctamente", "Registrar Historia Clinica", JOptionPane.INFORMATION_MESSAGE);
-            
-            new VenMenuMedico(medico);
-            dispose();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Historia Clinica NO registrada", "Registrar Historia Clinica", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("error sql");
-            System.out.println(e);
-        }
-        
-        
-    }//GEN-LAST:event_btnRegistrarActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        new VenMenuMedico(medico);
+        new VenMenuPaciente(paciente);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnRegistrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

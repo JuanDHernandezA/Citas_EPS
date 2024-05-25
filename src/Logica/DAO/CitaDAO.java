@@ -9,6 +9,7 @@ import Logica.Models.Agenda;
 import Logica.Models.Cita;
 import Logica.Models.Especialidad;
 import Logica.Models.Estado;
+import Logica.Models.HistoriaClinica;
 import Logica.Models.Paciente;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -80,7 +81,7 @@ public class CitaDAO {
             ResultSet rg = pg.executeQuery();
 
             while (rg.next()) {
-                cita = new Cita(rg.getInt("id_cita"),rg.getDate("fecha_cita"), rg.getTime("hora_inicio").toLocalTime(), rg.getTime("hora_fin").toLocalTime(), new Estado(rg.getInt("estado_id")), new Paciente(rg.getString("paciente_id")), new Agenda(rg.getInt("agenda_id")), null);
+                cita = new Cita(rg.getInt("id_cita"),rg.getDate("fecha_cita"), rg.getTime("hora_inicio").toLocalTime(), rg.getTime("hora_fin").toLocalTime(), new Estado(rg.getInt("estado_id")), new Paciente(rg.getString("paciente_id")), new Agenda(rg.getInt("agenda_id")), new HistoriaClinica(rg.getInt("hc_id")));
             }
             return cita;
         } catch (Exception e) {

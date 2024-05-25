@@ -21,6 +21,12 @@ public class HistoriaClinica {
         this.id = id;
     }
 
+    public HistoriaClinica(int id, String diagnostico, String tratamiento) {
+        this.id = id;
+        this.diagnostico = diagnostico;
+        this.tratamiento = tratamiento;
+    }
+
     public int getId() {
         return id;
     }

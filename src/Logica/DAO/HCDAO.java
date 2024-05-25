@@ -38,4 +38,24 @@ public class HCDAO {
         pg.close();
         return idGenerado;
     }
+    
+    public HistoriaClinica obtenerHC(int id){
+
+        HistoriaClinica hc = new HistoriaClinica();
+
+        try {
+            PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM historia_clinica WHERE id_hc = ?");
+            pg.setInt(1, id);
+            ResultSet res = pg.executeQuery();
+
+            while (res.next()) {
+                hc = new HistoriaClinica(res.getInt("id_hc"), res.getString("diagnostico"),res.getString("tratamiento"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+
+        return hc;
+    }
 }
