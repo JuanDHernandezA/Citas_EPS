@@ -35,6 +35,19 @@ public class Cita {
         this.hc = hc;
     }
 
+    public Cita(int id, Date fecha, LocalTime hora_inicio, LocalTime hora_fin, Estado estado, Paciente paciente, Agenda agenda, HistoriaClinica hc) {
+        this.id = id;
+        this.fecha = fecha;
+        this.hora_inicio = hora_inicio;
+        this.hora_fin = hora_fin;
+        this.estado = estado;
+        this.paciente = paciente;
+        this.agenda = agenda;
+        this.hc = hc;
+    }
+
+    
+    
     public int getId() {
         return id;
     }
@@ -65,6 +78,38 @@ public class Cita {
 
     public HistoriaClinica getHc() {
         return hc;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setHora_inicio(LocalTime hora_inicio) {
+        this.hora_inicio = hora_inicio;
+    }
+
+    public void setHora_fin(LocalTime hora_fin) {
+        this.hora_fin = hora_fin;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public void setAgenda(Agenda agenda) {
+        this.agenda = agenda;
+    }
+
+    public void setHc(HistoriaClinica hc) {
+        this.hc = hc;
     }
     
     

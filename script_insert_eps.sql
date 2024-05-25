@@ -83,8 +83,12 @@ INNER JOIN consultorio ON consultorio.id_con = jornada_consultorio.consultorio_i
 SELECT * FROM jornada_consultorio WHERE medico_id = '9999';
 
 
+SELECT * FROM cita
+INNER JOIN agenda ON cita.agenda_id = agenda.id_agenda
+INNER JOIN medico ON agenda.medico_id = medico.id_med
+WHERE medico.especialidad_id = 1 AND cita.estado_id = 1;
 
-
+--UPDATE cita SET paciente_id = ? WHERE id_cita = ? 
 
 
 

@@ -7,7 +7,9 @@ package Logica.DAO;
 import BD.ConexionBD;
 import Logica.Models.Agenda;
 import Logica.Models.Cita;
+import Logica.Models.Especialidad;
 import Logica.Models.Estado;
+import Logica.Models.Paciente;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,6 +49,46 @@ public class CitaDAO {
             return null;
         }
     }
+    
+    public List obtenerCitasEsp(Especialidad esp) {
+
+        List<Cita> citas = new ArrayList<>();
+        
+        try {
+            PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM cita INNER JOIN agenda ON cita.agenda_id = agenda.id_agenda INNER JOIN medico ON agenda.medico_id = medico.id_med WHERE medico.especialidad_id = ? AND cita.estado_id = 1");
+            pg.setInt(1, esp.getId());
+            ResultSet rg = pg.executeQuery();
+
+            while (rg.next()) {
+                citas.add(new Cita(rg.getInt("id_cita"),rg.getDate("fecha_cita"), rg.getTime("hora_inicio").toLocalTime(), rg.getTime("hora_fin").toLocalTime(), new Estado(rg.getInt("estado_id")), null, new Agenda(rg.getInt("agenda_id")), null));
+            }
+            return citas;
+        } catch (Exception e) {
+            System.out.println("error sql");
+            System.out.println(e);
+            return null;
+        }
+    }
+    
+    public Cita obtenerCita(int id) {
+
+        Cita cita = null;
+        
+        try {
+            PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM cita WHERE id_cita = ?");
+            pg.setInt(1, id);
+            ResultSet rg = pg.executeQuery();
+
+            while (rg.next()) {
+                cita = new Cita(rg.getInt("id_cita"),rg.getDate("fecha_cita"), rg.getTime("hora_inicio").toLocalTime(), rg.getTime("hora_fin").toLocalTime(), new Estado(rg.getInt("estado_id")), null, new Agenda(rg.getInt("agenda_id")), null);
+            }
+            return cita;
+        } catch (Exception e) {
+            System.out.println("error sql");
+            System.out.println(e);
+            return null;
+        }
+    }
 
     public void insertarCita(Cita cita) throws SQLException {
 
@@ -59,6 +101,26 @@ public class CitaDAO {
         pg.setTime(3, Time.valueOf(cita.getHora_fin()));
         pg.setInt(4, cita.getEstado().getId());
         pg.setInt(5, cita.getAgenda().getId());
+        pg.executeUpdate();
+        pg.close();
+    }
+    
+    public void insertarPaciente(Cita cita, Paciente paciente) throws SQLException {
+        
+        String statement = "UPDATE cita SET paciente_id = ? WHERE id_cita = ? ";
+        PreparedStatement pg = cn.getConexion().prepareStatement(statement);
+        pg.setString(1, paciente.getIdentificacion());
+        pg.setInt(2, cita.getId());
+        pg.executeUpdate();
+        pg.close();
+    }
+    
+    public void insertarEstado(int estado, Cita cita) throws SQLException {
+        
+        String statement = "UPDATE cita SET estado_id = ? WHERE id_cita = ? ";
+        PreparedStatement pg = cn.getConexion().prepareStatement(statement);
+        pg.setInt(1, estado);
+        pg.setInt(2, cita.getId());
         pg.executeUpdate();
         pg.close();
     }

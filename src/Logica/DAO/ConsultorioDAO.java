@@ -102,4 +102,25 @@ public class ConsultorioDAO {
             return null;
         }
     }
+    
+    public List obtenerConsultorios(){
+        
+        List<Consultorio> consultorios = new ArrayList();
+
+        try {
+            String statement = "SELECT * FROM consultorio";
+            PreparedStatement pg = cn.getConexion().prepareStatement(statement);
+            ResultSet res = pg.executeQuery();
+
+            while (res.next()) {
+                Consultorio consultorio = new Consultorio(res.getInt("id_con"),res.getInt("numero_con"), new Especialidad(res.getInt("especialidad_id")),new Sede(res.getInt("sede_id")));
+                consultorios.add(consultorio);
+            }
+
+            return consultorios;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
 }

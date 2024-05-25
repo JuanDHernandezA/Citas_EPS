@@ -45,6 +45,26 @@ public class AgendaDAO {
         return agenda;
     }
 
+    public List obtenerAgendas() throws SQLException {
+        
+        List<Agenda> agendas = new ArrayList<>();
+        
+        PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM agenda");
+        ResultSet rg = pg.executeQuery();
+        
+        while (rg.next()) {
+            Agenda agenda = new Agenda();
+            
+            agenda.setId(rg.getInt("id_agenda"));
+            agenda.setFecha_inicio(rg.getDate("fecha_inicio_agenda").toLocalDate());
+            agenda.setFecha_fin(rg.getDate("fecha_fin_agenda").toLocalDate());
+            agenda.setMedico(new Medico(rg.getString("medico_id")));
+            
+            agendas.add(agenda);
+        }
+        return agendas;
+    }
+    
     public int insertarAgenda(Agenda agenda) throws SQLException {
 
         int id = 0;

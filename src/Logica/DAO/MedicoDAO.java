@@ -51,6 +51,33 @@ public class MedicoDAO {
         }
         return medico;
     }
+    
+    public List obtenerMedicos() throws SQLException {
+
+        List<Medico> medicos = new ArrayList();
+
+        PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM medico");
+        ResultSet res = pg.executeQuery();
+
+        while (res.next()) {
+            
+            Medico medico = new Medico();
+            
+            medico.setTd(new TipoDocumento(res.getInt("tipo_id"), null, null));
+            medico.setIdentificacion(res.getString("id_med"));
+            medico.setNombre(res.getString("nombre_med"));
+            medico.setApellido(res.getString("apellido_med"));
+            medico.setCorreo(res.getString("correo_med"));
+            medico.setTelefono(res.getString("telefono_med"));
+            medico.setFecha_nacimiento(res.getDate("fecha_nacimiento_med"));
+            medico.setRegistro_profesional(res.getString("registro_med"));
+            medico.setGenero(new Genero(res.getInt("genero_id"), null));
+            medico.setEspecialidad(new Especialidad(res.getInt("especialidad_id"), null));
+            
+            medicos.add(medico);
+        }
+        return medicos;
+    }
 
     public int[] insertarMedico(Medico medico) throws SQLException {
         String statement = "INSERT INTO medico VALUES (?,?,?,?,?,?,?,?,?,?)  RETURNING id_med,especialidad_id";

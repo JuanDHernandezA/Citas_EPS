@@ -21,6 +21,7 @@ public class VenMenuPaciente extends javax.swing.JFrame {
         this.paciente = paciente;
         initComponents();
         setLocationRelativeTo(null);
+        txtTitulo.setText(txtTitulo.getText()+" "+paciente.getNombre());
         setVisible(true);
     }
 
@@ -35,7 +36,7 @@ public class VenMenuPaciente extends javax.swing.JFrame {
 
         BtnPedir = new javax.swing.JButton();
         BtnConsultar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        txtTitulo = new javax.swing.JLabel();
         BtnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -55,9 +56,9 @@ public class VenMenuPaciente extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Bienvenido, paciente");
+        txtTitulo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        txtTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtTitulo.setText("Bienvenido,");
 
         BtnCancelar.setText("Cancelar Citas");
         BtnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -74,7 +75,7 @@ public class VenMenuPaciente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -87,7 +88,7 @@ public class VenMenuPaciente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(BtnPedir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -101,9 +102,8 @@ public class VenMenuPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnPedirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPedirActionPerformed
-        /*Solicitar_cita sc = new Solicitar_cita();
-        sc.setVisible(true);
-        dispose();*/
+        new VenPedirCita(paciente);
+        dispose();
     }//GEN-LAST:event_BtnPedirActionPerformed
 
     private void BtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsultarActionPerformed
@@ -123,6 +123,6 @@ public class VenMenuPaciente extends javax.swing.JFrame {
     private javax.swing.JButton BtnCancelar;
     private javax.swing.JButton BtnConsultar;
     private javax.swing.JButton BtnPedir;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables
 }
