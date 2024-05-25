@@ -89,6 +89,27 @@ public class CitaDAO {
             return null;
         }
     }
+    
+    public List obtenerCitaPaciente(Paciente paciente) {
+
+        List<Cita> citas = new ArrayList<>();
+        
+        try {
+            PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM cita WHERE paciente_id = ?");
+            pg.setString(1, paciente.getIdentificacion());
+            ResultSet rg = pg.executeQuery();
+
+            while (rg.next()) {
+                Cita cita = new Cita(rg.getInt("id_cita"),rg.getDate("fecha_cita"), rg.getTime("hora_inicio").toLocalTime(), rg.getTime("hora_fin").toLocalTime(), new Estado(rg.getInt("estado_id")), null, new Agenda(rg.getInt("agenda_id")), null);
+                citas.add(cita);
+            }
+            return citas;
+        } catch (Exception e) {
+            System.out.println("error sql");
+            System.out.println(e);
+            return null;
+        }
+    }
 
     public void insertarCita(Cita cita) throws SQLException {
 

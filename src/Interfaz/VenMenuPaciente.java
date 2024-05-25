@@ -107,9 +107,8 @@ public class VenMenuPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnPedirActionPerformed
 
     private void BtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsultarActionPerformed
-        /*Consultar_Cita cc = new Consultar_Cita();
-        cc.setVisible(true);
-        dispose();*/
+        new VenConsulCita(paciente);
+        dispose();
     }//GEN-LAST:event_BtnConsultarActionPerformed
 
     private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
