@@ -6,7 +6,9 @@ package Logica.DAO;
 
 import BD.ConexionBD;
 import Logica.Models.Consultorio;
+import Logica.Models.Especialidad;
 import Logica.Models.Jornada;
+import Logica.Models.Sede;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -60,7 +62,7 @@ public class ConsultorioDAO {
         }
     }
     
-    public List obtenerConsultoriosEsp() throws SQLException{
+    /*public List obtenerConsultoriosEsp() throws SQLException{
         
         List<Consultorio> consultorios = new ArrayList<>();
 
@@ -74,6 +76,27 @@ public class ConsultorioDAO {
             }
 
             return consultorios;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }*/
+    
+    public Consultorio obtenerConsultorio(int id){
+        
+        Consultorio consultorio = new Consultorio();
+
+        try {
+            String statement = "SELECT * FROM consultorio WHERE id_con = ?";
+            PreparedStatement pg = cn.getConexion().prepareStatement(statement);
+            pg.setInt(1, id);
+            ResultSet res = pg.executeQuery();
+
+            while (res.next()) {
+                consultorio = new Consultorio(res.getInt("id_con"),res.getInt("numero_con"), new Especialidad(res.getInt("especialidad_id")),new Sede(res.getInt("sede_id")));
+            }
+
+            return consultorio;
         } catch (Exception e) {
             System.out.println(e);
             return null;

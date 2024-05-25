@@ -5,29 +5,47 @@
 package Logica.DAO;
 
 import BD.ConexionBD;
+import Logica.Models.Agenda;
 import Logica.Models.Cita;
+import Logica.Models.Estado;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author JDiego
  */
 public class CitaDAO {
+
     ConexionBD cn;
 
     public CitaDAO() {
         this.cn = new ConexionBD();
     }
 
-    public ResultSet obtenerCita(int id) throws SQLException {
-        PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM agenda WHERE id_cita = ?");
-        pg.setInt(1, id);
-        ResultSet rg = pg.executeQuery();
-        return rg;
+    public List obtenerCitas(int id) {
+
+        List<Cita> citas = new ArrayList<>();
+        
+        try {
+            PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM cita WHERE agenda_id = ?");
+            pg.setInt(1, id);
+            ResultSet rg = pg.executeQuery();
+
+            while (rg.next()) {
+                citas.add(new Cita(rg.getDate("fecha_cita"), rg.getTime("hora_inicio").toLocalTime(), rg.getTime("hora_fin").toLocalTime(), new Estado(rg.getInt("estado_id")), null, new Agenda(rg.getInt("agenda_id")), null));
+            }
+            return citas;
+        } catch (Exception e) {
+            System.out.println("error sql");
+            System.out.println(e);
+            return null;
+        }
     }
 
     public void insertarCita(Cita cita) throws SQLException {

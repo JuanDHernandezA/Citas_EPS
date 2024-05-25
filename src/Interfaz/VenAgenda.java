@@ -1,13 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Interfaz;
 
+import Logica.DAO.AgendaDAO;
+import Logica.DAO.CitaDAO;
+import Logica.DAO.ConsultorioDAO;
+import Logica.DAO.EspecialidadDAO;
+import Logica.DAO.EstadoDAO;
+import Logica.DAO.JornadaConsultorioDAO;
+import Logica.DAO.SedeDAO;
+import Logica.Models.Agenda;
+import Logica.Models.Cita;
+import Logica.Models.Consultorio;
+import Logica.Models.Especialidad;
+import Logica.Models.Estado;
 import Logica.Models.Medico;
+import Logica.Models.Sede;
 import java.awt.Color;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.SwingConstants;
@@ -18,21 +25,25 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Time;
+import java.util.List;
 
-/**
- *
- * @author FliaSalinasRodriguez
- */
 public class VenAgenda extends javax.swing.JFrame {
 
-    /**
-     * Creates new form calendar
-     * prioritarias : 40 minutos
-     * primera vez : 30 minutos
-     * lectura de exámenes : 15 minutos
-     * control : 15 minutos
-     */
-    
+    AgendaDAO agendaDAO = new AgendaDAO();
+    EspecialidadDAO espDAO = new EspecialidadDAO();
+    JornadaConsultorioDAO jcDAO = new JornadaConsultorioDAO();
+    ConsultorioDAO conDAO = new ConsultorioDAO();
+    SedeDAO sedeDAO = new SedeDAO();
+    CitaDAO citaDAO = new CitaDAO();
+    EstadoDAO estadoDAO = new EstadoDAO();
+
+    Agenda agenda = new Agenda();
+    Especialidad esp = new Especialidad();
+    Consultorio consultorio = new Consultorio();
+    Sede sede = new Sede();
+    List<Cita> citas;
+    List<Estado> estados;
+
     private int dia;
     private int mes;
     private int año;
@@ -41,129 +52,134 @@ public class VenAgenda extends javax.swing.JFrame {
     private ArrayList<Time> inicios_citas = new ArrayList<Time>();
     private ArrayList<Time> fines_citas = new ArrayList<Time>();
     private ArrayList<String> tipos_citas = new ArrayList<String>();
-    private ArrayList<String> estados_citas = new ArrayList<String>();
-    
-    public VenAgenda(Medico medico){ 
+    private ArrayList<String> estados_citas = new ArrayList<String>();///////////////////////////////////////////////////////////////
+
+    public VenAgenda(Medico medico) {
         Calendar c = Calendar.getInstance();
 
         this.medico = medico;
-        //insertar_citas(id);
+
         initComponents();
         setTitle("Agenda médico");
         setLocationRelativeTo(null);
         setVisible(true);
-        
-        /*
-        ConsultasBD bd = new ConsultasBD();
-        ResultSet med = bd.obtenerMedico(id);
-        ResultSet usu = bd.obtenerUsuario(id);
-        ResultSet esp = null;
-        ResultSet cons = null;
-        ResultSet sede = null;
-        ResultSet ag = bd.obtenerAgenda(id);
-        while(ag.next()){
-             c.setTime(ag.getDate("f_fecha_ini"));
-             dia = c.get(Calendar.DAY_OF_WEEK);
-             mes = c.get(Calendar.MONTH)+1;
-             año = c.get(Calendar.YEAR);
-             this.TxtFechaInicio.setText(1+"-"+mes+"-"+año);
+
+        try {
+            agenda = agendaDAO.obtenerAgendaMed(medico);
+            this.TxtFechaInicio.setText(agenda.getFecha_inicio().toString());
+            this.TxtFechaFin.setText(agenda.getFecha_fin().toString());
+
+            esp = espDAO.obtenerEspecialidad(medico.getEspecialidad().getId());
+            this.TxtEspecialidad.setText(esp.getNombre());
+
+            consultorio = conDAO.obtenerConsultorio(jcDAO.obtenerJCMed(medico).getConsultorio().getId());
+            this.TxtConsultorio.setText(consultorio.getNumero() + "");
+
+            sede = sedeDAO.obtenerSede(consultorio.getSede().getId());
+            this.TxtSede.setText(sede.getNombre());
+
+            this.TxtMedico.setText(medico.getNombre() + " " + medico.getApellido());
+
+            this.TxtConsultorio.setEditable(false);
+            this.TxtMedico.setEditable(false);
+            this.TxtEspecialidad.setEditable(false);
+            this.TxtFechaInicio.setEditable(false);
+            this.TxtFechaFin.setEditable(false);
+            this.TxtSede.setEditable(false);
+
+            citas = citaDAO.obtenerCitas(agenda.getId());
+            estados = estadoDAO.obtenerEstados();
+
+            dia = agenda.getFecha_inicio().getDayOfWeek().getValue();
+            mes = agenda.getFecha_inicio().getMonthValue();
+            año = agenda.getFecha_inicio().getYear();
+
+        } catch (Exception e) {
+            System.out.println("error sql");
+            System.out.println(e);
         }
-          
-        while(med.next()){
-            esp = bd.obtenerEspecialidad(med.getInt("k_id_especialidad"));
-           
-        while(esp.next()){
-             cons = bd.obtenerConsultorio(esp.getInt("k_id_especialidad"));
-             this.TxtEspecialidad.setText(esp.getString("n_nombre_esp"));
-             }
-        while(cons.next()){
-             sede = bd.obtenerSede(cons.getString("k_id_sede"));
-             this.TxtConsultorio.setText(""+cons.getInt("k_numero_consultorio"));   
-            }
-        while(sede.next()){
-            this.TxtSede.setText(sede.getString("k_id_sede"));
-            }
-        }
-        
-        while(usu.next()){
-        this.TxtMedico.setText(usu.getString("n_nombre")+" "+usu.getString("n_apellido"));
-        }
-        while(esp.next()){
-        this.TxtEspecialidad.setText(esp.getString("n_nombre_esp"));
-        }*/
-        
-        
-        
-        this.TxtConsultorio.setEditable(false);
-        this.TxtMedico.setEditable(false);
-        this.TxtEspecialidad.setEditable(false);
-        this.TxtFechaInicio.setEditable(false);
-        this.TxtFechaFin.setEditable(false);
-        this.TxtSede.setEditable(false);
-        table();
-              
+
+        tabla();
     }
 
-    public void insertar_citas(int id) throws SQLException{
-        /*ResultSet ob_ag = bd.obtenerAgenda(id);
-        ResultSet ob_all_ag = bd.obtenerAgendas();
-        
-        while(ob_all_ag.next()){
-            ResultSet med = bd.obtenerUsuario(id);
-            while(med.next()){
-                if(ob_all_ag.getInt("k_id_medico") == -1){
-                     bd.crearAgenda(id, med.getString("k_tipo_id"));
-                     ob_ag = bd.obtenerAgenda(id);
-                     break; 
-                }
-                break;
-            }
-            
+    public void insertar_citas() {
+        for (Cita cita : citas) {
+            dias_citas.add(cita.getFecha().toLocalDate().getDayOfWeek().getValue());
+            inicios_citas.add(Time.valueOf(cita.getHora_inicio()));
+            fines_citas.add(Time.valueOf(cita.getHora_fin()));
+            //estados_citas.add(cita.getEstado().getId());
         }
-       
-        
-        int id_agenda = 0;
-        while(ob_ag.next()){
-          id_agenda = ob_ag.getInt("k_id_agenda");
-        }
-        ResultSet ob_ci = bd.obtenerCitas(id_agenda); 
-
-        
-        while(ob_ci.next()){
-            dias_citas.add(ob_ci.getInt("q_dia"));
-            inicios_citas.add(ob_ci.getTime("f_hora_inicial"));
-            fines_citas.add(ob_ci.getTime("f_hora_final"));
-            tipos_citas.add(ob_ci.getString("i_tipo_cita"));
-            estados_citas.add(ob_ci.getString("i_estado_cita"));
-   
-        } */
-
     }
-    
-    
-    public void table(){
+
+    public void tabla() {
+
         DefaultTableModel model = new DefaultTableModel(){
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        model.addColumn("Fecha");
+        model.addColumn("Hora Inicio");
+        model.addColumn("Hora Fin");
+        model.addColumn("Estado");
+        //model.addColumn("Atender");
+
+        for (Cita cita : citas) {
+
+            for (Estado estado : estados) {
+                if (cita.getEstado().getId() == estado.getId()) {
+                    cita.getEstado().setEstado(estado.getEstado());
+                }
+            }
+
+            model.addRow(new Object[]{cita.getFecha(), cita.getHora_inicio(), cita.getHora_fin(), cita.getEstado().getEstado()});
+        }
+
+        tblCitas.setModel(model);
+
+        this.tblCitas.setModel(model);
+        this.tblCitas.setRowHeight(50);
+        this.tblCitas.setGridColor(Color.BLACK);
+
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setVerticalAlignment(SwingConstants.CENTER);
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        tcr.setBorder(null);
+
+        this.tblCitas.getColumnModel().getColumn(0).setCellRenderer(tcr);
+        this.tblCitas.getColumnModel().getColumn(1).setCellRenderer(tcr);
+        this.tblCitas.getColumnModel().getColumn(2).setCellRenderer(tcr);
+        this.tblCitas.getColumnModel().getColumn(3).setCellRenderer(tcr);
+
+        //tblCitas.getColumn("Atender").setCellRenderer(new ButtonRenderer());
+        //tblCitas.getColumn("Atender").setCellEditor(new ButtonEditor(tblCitas));
+    }
+
+    public void table() {
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
         String[] columnas = new String[7];
-        columnas[0]="Lunes";
-        columnas[1]="Martes";
-        columnas[2]="Miércoles";
-        columnas[3]="Jueves";
-        columnas[4]="Viernes";
-        columnas[5]="Sábado";
-        columnas[6]="Domingo";
+        columnas[0] = "Lunes";
+        columnas[1] = "Martes";
+        columnas[2] = "Miércoles";
+        columnas[3] = "Jueves";
+        columnas[4] = "Viernes";
+        columnas[5] = "Sábado";
+        columnas[6] = "Domingo";
         model.setColumnIdentifiers(columnas);
-        
+
         String[] fila1 = new String[7];
         String[] fila2 = new String[7];
         String[] fila3 = new String[7];
         String[] fila4 = new String[7];
         String[] fila5 = new String[7];
-        
+
         fila1[0] = "";
         fila1[1] = "";
         fila1[2] = "";
@@ -171,7 +187,7 @@ public class VenAgenda extends javax.swing.JFrame {
         fila1[4] = "";
         fila1[5] = "";
         fila1[6] = "";
-        
+
         fila2[0] = "";
         fila2[1] = "";
         fila2[2] = "";
@@ -179,7 +195,7 @@ public class VenAgenda extends javax.swing.JFrame {
         fila2[4] = "";
         fila2[5] = "";
         fila2[6] = "";
-        
+
         fila3[0] = "";
         fila3[1] = "";
         fila3[2] = "";
@@ -187,7 +203,7 @@ public class VenAgenda extends javax.swing.JFrame {
         fila3[4] = "";
         fila3[5] = "";
         fila3[6] = "";
-        
+
         fila4[0] = "";
         fila4[1] = "";
         fila4[2] = "";
@@ -195,7 +211,7 @@ public class VenAgenda extends javax.swing.JFrame {
         fila4[4] = "";
         fila4[5] = "";
         fila4[6] = "";
-        
+
         fila5[0] = "";
         fila5[1] = "";
         fila5[2] = "";
@@ -203,193 +219,176 @@ public class VenAgenda extends javax.swing.JFrame {
         fila5[4] = "";
         fila5[5] = "";
         fila5[6] = "";
-        
 
         int i = 1;
         int cant = 0;
-        
-        if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12){
+
+        if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) {
             cant = 31;
-        }
-        else{
-            if(mes == 2){
+        } else {
+            if (mes == 2) {
                 cant = 29;
-            }
-            else{
+            } else {
                 cant = 30;
             }
         }
-        
-        for(int k = 1; k < 6;k++){
-                int x = 0;
-                switch(k){
+
+        for (int k = 1; k < 6; k++) {
+            int x = 0;
+            switch (k) {
+                case 1:
+                    x = dia + 1;
+                    break;
+                default:
+                    x = 0;
+                    break;
+            }
+            for (int j = x; j < 7; j++) {
+                if (i == cant + 1) {
+                    break;
+                }
+                //this.TxtFechaFin.setText(i + "/" + mes + "/" + año);
+                switch (k) {
                     case 1:
-                        x = dia-2;
+                        fila1[j] = Integer.toString(i);
+                        i++;
                         break;
-                    default:
-                        x = 0;
+                    case 2:
+                        fila2[j] = Integer.toString(i);
+                        i++;
+                        break;
+                    case 3:
+                        fila3[j] = Integer.toString(i);
+                        i++;
+                        break;
+                    case 4:
+                        fila4[j] = Integer.toString(i);
+                        i++;
+                        break;
+                    case 5:
+                        fila5[j] = Integer.toString(i);
+                        i++;
                         break;
                 }
-                for(int j = x; j < 7; j++){
-                    if(i==cant+1) break;
-                    this.TxtFechaFin.setText(i+"/"+mes+"/"+año);
-                    switch(k){
-                        case 1:
-                            fila1[j]=Integer.toString(i);
-                            i++;
-                            break;
-                        case 2:
-                            fila2[j]=Integer.toString(i);
-                            i++;
-                            break;
-                        case 3:
-                            fila3[j]=Integer.toString(i);
-                            i++;
-                            break;
-                        case 4:
-                            fila4[j]=Integer.toString(i);
-                            i++;
-                            break;
-                        case 5:
-                            fila5[j]=Integer.toString(i);
-                            i++;
-                            break;
+            }
+        }
+
+        for (int k = 1; k < 6; k++) {
+            int x = 0;
+            switch (k) {
+                case 1:
+                    x = dia + 1;
+                    break;
+                default:
+                    x = 0;
+                    break;
+            }
+            for (int p = x; p < 7; p++) {
+                for (int z : dias_citas) {
+
+                    try {
+                        if (z == Integer.parseInt(fila1[p])) {
+                            String value = fila1[p];
+                            fila1[p] = "<html>" + value + "<br> Hora inicio: " + inicios_citas.get(dias_citas.indexOf(z)) + "<br>" + "Hora Fin: " + fines_citas.get(dias_citas.indexOf(z)) + "</html>";
+                        }
+                    } catch (Exception e) {
+
                     }
-                    
                 }
             }
-        
-        
-    for(int k = 1; k < 6;k++){
-                int x = 0;
-                switch(k){
-                    case 1:
-                        x = dia-2;
-                        break;
-                    default:
-                        x = 0;
-                        break;
-                }
-        for(int p = x; p < 7; p++){
-            for(int z: dias_citas){
-                try{
-                if(z == Integer.parseInt(fila1[p])){
-                    String value = fila1[p];
-                    fila1[p]=
-                        "<html>"
-                        +value
-                        +"<br>"
-                        + "Hora inicio: "+inicios_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Hora Fin: "+fines_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Estado cita: "+estados_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Tipo cita: "+tipos_citas.get(dias_citas.indexOf(z))
-                        + "</html>";
-                }
-                }catch(Exception e){
-                    
+
+            for (int p = 0; p < 7; p++) {
+                for (int z : dias_citas) {
+                    try {
+                        if (z == Integer.parseInt(fila2[p])) {
+                            String value = fila2[p];
+                            fila2[p]
+                                    = "<html>"
+                                    + value
+                                    + "<br>"
+                                    + "Hora inicio: " + inicios_citas.get(dias_citas.indexOf(z))
+                                    + "<br>"
+                                    + "Hora Fin: " + fines_citas.get(dias_citas.indexOf(z))
+                                    + "</html>";
+                        }
+                    } catch (Exception e) {
+
+                    }
                 }
             }
-        }
-        
-        for(int p = 0; p < 7; p++){
-            for(int z: dias_citas){
-                try{
-                if(z == Integer.parseInt(fila2[p])){
-                    String value = fila2[p];
-                    fila2[p]=
-                        "<html>"
-                        +value
-                        +"<br>"
-                        + "Hora inicio: "+inicios_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Hora Fin: "+fines_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Estado cita: "+estados_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Tipo cita: "+tipos_citas.get(dias_citas.indexOf(z))
-                        + "</html>";
-                }
-                }catch(Exception e){
-                    
-                }
-            }
-        }
-                
-        for(int p = 0; p < 7; p++){
-            for(int z: dias_citas){
-                try{
-                if(z == Integer.parseInt(fila3[p])){
-                    String value = fila3[p];
-                    fila3[p]=
-                        "<html>"
-                        +value
-                        +"<br>"
-                        + "Hora inicio: "+inicios_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Hora Fin: "+fines_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Estado cita: "+estados_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Tipo cita: "+tipos_citas.get(dias_citas.indexOf(z))
-                        + "</html>";
-                }
-                }catch(Exception e){
-                    
+
+            for (int p = 0; p < 7; p++) {
+                for (int z : dias_citas) {
+                    try {
+                        if (z == Integer.parseInt(fila3[p])) {
+                            String value = fila3[p];
+                            fila3[p]
+                                    = "<html>"
+                                    + value
+                                    + "<br>"
+                                    + "Hora inicio: " + inicios_citas.get(dias_citas.indexOf(z))
+                                    + "<br>"
+                                    + "Hora Fin: " + fines_citas.get(dias_citas.indexOf(z))
+                                    + "<br>"
+                                    + "Estado cita: " + estados_citas.get(dias_citas.indexOf(z))
+                                    + "<br>"
+                                    + "Tipo cita: " + tipos_citas.get(dias_citas.indexOf(z))
+                                    + "</html>";
+                        }
+                    } catch (Exception e) {
+
+                    }
                 }
             }
-        }
-                        
-        for(int p = 0; p < 7; p++){
-            for(int z: dias_citas){
-                try{
-                if(z == Integer.parseInt(fila4[p])){
-                    String value = fila4[p];
-                    fila4[p]=
-                        "<html>"
-                        +value
-                        +"<br>"
-                        + "Hora inicio: "+inicios_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Hora Fin: "+fines_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Estado cita: "+estados_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Tipo cita: "+tipos_citas.get(dias_citas.indexOf(z))
-                        + "</html>";
+
+            for (int p = 0; p < 7; p++) {
+                for (int z : dias_citas) {
+                    try {
+                        if (z == Integer.parseInt(fila4[p])) {
+                            String value = fila4[p];
+                            fila4[p]
+                                    = "<html>"
+                                    + value
+                                    + "<br>"
+                                    + "Hora inicio: " + inicios_citas.get(dias_citas.indexOf(z))
+                                    + "<br>"
+                                    + "Hora Fin: " + fines_citas.get(dias_citas.indexOf(z))
+                                    + "<br>"
+                                    + "Estado cita: " + estados_citas.get(dias_citas.indexOf(z))
+                                    + "<br>"
+                                    + "Tipo cita: " + tipos_citas.get(dias_citas.indexOf(z))
+                                    + "</html>";
+                        }
+                    } catch (Exception e) {
+
+                    }
                 }
-                }catch(Exception e){
-                    
+            }
+
+            for (int p = 0; p < 7; p++) {
+                for (int z : dias_citas) {
+                    try {
+                        if (z == Integer.parseInt(fila5[p])) {
+                            String value = fila5[p];
+                            fila5[p]
+                                    = "<html>"
+                                    + value
+                                    + "<br>"
+                                    + "Hora inicio: " + inicios_citas.get(dias_citas.indexOf(z))
+                                    + "<br>"
+                                    + "Hora Fin: " + fines_citas.get(dias_citas.indexOf(z))
+                                    + "<br>"
+                                    + "Estado cita: " + estados_citas.get(dias_citas.indexOf(z))
+                                    + "<br>"
+                                    + "Tipo cita: " + tipos_citas.get(dias_citas.indexOf(z))
+                                    + "</html>";
+                        }
+                    } catch (Exception e) {
+
+                    }
                 }
             }
         }
-                                
-        for(int p = 0; p < 7; p++){
-            for(int z: dias_citas){
-                try{
-                if(z == Integer.parseInt(fila5[p])){
-                    String value = fila5[p];
-                    fila5[p]=
-                        "<html>"
-                        +value
-                        +"<br>"
-                        + "Hora inicio: "+inicios_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Hora Fin: "+fines_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Estado cita: "+estados_citas.get(dias_citas.indexOf(z))
-                        +"<br>"
-                        + "Tipo cita: "+tipos_citas.get(dias_citas.indexOf(z))
-                        + "</html>";
-                }
-                }catch(Exception e){
-                    
-                }
-            }
-        }
-    }
         /*
 
         
@@ -483,35 +482,31 @@ public class VenAgenda extends javax.swing.JFrame {
                 + "A: 17:05<br>"
                 + "Tipo: Control<br>"
                 + "</html>";
-        */
-             
+         */
+
         model.addRow(fila1);
         model.addRow(fila2);
         model.addRow(fila3);
         model.addRow(fila4);
         model.addRow(fila5);
-        
-        
-        
-        
-        this.TblCalendar.setModel(model);
-        this.TblCalendar.setRowHeight(145);
-        this.TblCalendar.setGridColor(Color.BLACK);
-        
+
+        this.tblCitas.setModel(model);
+        this.tblCitas.setRowHeight(145);
+        this.tblCitas.setGridColor(Color.BLACK);
+
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setVerticalAlignment(SwingConstants.TOP);
         tcr.setHorizontalAlignment(SwingConstants.LEFT);
         tcr.setBorder(null);
-        
-        
-        this.TblCalendar.getColumnModel().getColumn(0).setCellRenderer(tcr);
-        this.TblCalendar.getColumnModel().getColumn(1).setCellRenderer(tcr);
-        this.TblCalendar.getColumnModel().getColumn(2).setCellRenderer(tcr);
-        this.TblCalendar.getColumnModel().getColumn(3).setCellRenderer(tcr);
-        this.TblCalendar.getColumnModel().getColumn(4).setCellRenderer(tcr);
-        this.TblCalendar.getColumnModel().getColumn(5).setCellRenderer(tcr);
-        this.TblCalendar.getColumnModel().getColumn(6).setCellRenderer(tcr);
-        
+
+        this.tblCitas.getColumnModel().getColumn(0).setCellRenderer(tcr);
+        this.tblCitas.getColumnModel().getColumn(1).setCellRenderer(tcr);
+        this.tblCitas.getColumnModel().getColumn(2).setCellRenderer(tcr);
+        this.tblCitas.getColumnModel().getColumn(3).setCellRenderer(tcr);
+        this.tblCitas.getColumnModel().getColumn(4).setCellRenderer(tcr);
+        this.tblCitas.getColumnModel().getColumn(5).setCellRenderer(tcr);
+        this.tblCitas.getColumnModel().getColumn(6).setCellRenderer(tcr);
+
     }
 
     /**
@@ -524,7 +519,7 @@ public class VenAgenda extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        TblCalendar = new javax.swing.JTable();
+        tblCitas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         TxtMedico = new javax.swing.JTextField();
@@ -540,11 +535,12 @@ public class VenAgenda extends javax.swing.JFrame {
         TxtConsultorio = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         TxtSede = new javax.swing.JTextField();
+        btnAtender = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        TblCalendar.setFont(new java.awt.Font("Sitka Small", 0, 11)); // NOI18N
-        TblCalendar.setModel(new javax.swing.table.DefaultTableModel(
+        tblCitas.setFont(new java.awt.Font("Sitka Small", 0, 11)); // NOI18N
+        tblCitas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -552,12 +548,38 @@ public class VenAgenda extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Fecha", "Hora Inicio", "Hora Fin", "Estado"
             }
-        ));
-        TblCalendar.setGridColor(new java.awt.Color(0, 0, 0));
-        TblCalendar.setRowHeight(125);
-        jScrollPane1.setViewportView(TblCalendar);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCitas.setGridColor(new java.awt.Color(0, 0, 0));
+        tblCitas.setRowHeight(125);
+        tblCitas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCitasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblCitas);
+        if (tblCitas.getColumnModel().getColumnCount() > 0) {
+            tblCitas.getColumnModel().getColumn(0).setResizable(false);
+            tblCitas.getColumnModel().getColumn(1).setResizable(false);
+            tblCitas.getColumnModel().getColumn(2).setResizable(false);
+            tblCitas.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jLabel1.setFont(new java.awt.Font("Sitka Small", 0, 14)); // NOI18N
         jLabel1.setText("Agenda de citas");
@@ -607,6 +629,14 @@ public class VenAgenda extends javax.swing.JFrame {
 
         TxtSede.setFont(new java.awt.Font("Sitka Small", 0, 11)); // NOI18N
 
+        btnAtender.setText("Atender Cita");
+        btnAtender.setEnabled(false);
+        btnAtender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtenderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -622,31 +652,35 @@ public class VenAgenda extends javax.swing.JFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(149, 149, 149))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
-                            .addComponent(BtnRegresar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(TxtConsultorio, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(TxtMedico)
-                                            .addComponent(TxtEspecialidad, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))))
-                                .addGap(52, 52, 52)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TxtFechaFin)
-                                    .addComponent(TxtFechaInicio)
-                                    .addComponent(TxtSede))))
+                                .addComponent(BtnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(291, 291, 291)
+                                .addComponent(btnAtender, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(jLabel7)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(TxtConsultorio, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(TxtMedico)
+                                                .addComponent(TxtEspecialidad, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))))
+                                    .addGap(52, 52, 52)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(TxtFechaFin)
+                                        .addComponent(TxtFechaInicio)
+                                        .addComponent(TxtSede)))))
                         .addContainerGap(31, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -677,7 +711,9 @@ public class VenAgenda extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnRegresar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BtnRegresar)
+                    .addComponent(btnAtender))
                 .addGap(21, 21, 21))
         );
 
@@ -699,19 +735,33 @@ public class VenAgenda extends javax.swing.JFrame {
             System.out.println("Error SQL :v");
             System.out.println(ex);
         }
-        
+
     }//GEN-LAST:event_BtnRegresarActionPerformed
+
+    private void btnAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtenderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAtenderActionPerformed
+
+    private void tblCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCitasMouseClicked
+
+        System.out.println(tblCitas.getSelectedRow());
+        System.out.println(tblCitas.getValueAt(tblCitas.getSelectedRow(), 3));
+        
+        if(tblCitas.getValueAt(tblCitas.getSelectedRow(), 3).equals("AGENDADA")){
+            btnAtender.setEnabled(true);
+        }
+    }//GEN-LAST:event_tblCitasMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnRegresar;
-    private javax.swing.JTable TblCalendar;
     private javax.swing.JTextField TxtConsultorio;
     private javax.swing.JTextField TxtEspecialidad;
     private javax.swing.JTextField TxtFechaFin;
     private javax.swing.JTextField TxtFechaInicio;
     private javax.swing.JTextField TxtMedico;
     private javax.swing.JTextField TxtSede;
+    private javax.swing.JButton btnAtender;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -721,5 +771,6 @@ public class VenAgenda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblCitas;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,20 +14,15 @@ import Logica.Models.Medico;
 public class VenMenuMedico extends javax.swing.JFrame {
 
     Medico medico;
-    
-    /**
-     * Creates new form MenuMedico
-     */
-    
-    public VenMenuMedico(Medico medico){
+
+    public VenMenuMedico(Medico medico) {
         this.medico = medico;
         initComponents();
         setLocationRelativeTo(null);
-        jLabelMed.setText(jLabelMed.getText()+" "+medico.getNombre());
+        jLabelMed.setText(jLabelMed.getText() + " " + medico.getNombre());
         setVisible(true);
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -93,23 +88,14 @@ public class VenMenuMedico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitaActionPerformed
-       new VenAbrirAgenda(medico);
-       dispose();
+        new VenAbrirAgenda(medico);
+        dispose();
     }//GEN-LAST:event_BtnCitaActionPerformed
 
     private void BtnAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgendaActionPerformed
-       new VenAgenda(medico);
-       dispose();
-        /*try {
-            Agenda_Citas a = new Agenda_Citas(this.getId_medico());
-            ConsultasBD bd = new ConsultasBD();
-            bd.actualizarEstadoAgenda("abierto", this.getId_medico());
-            a.setVisible(true);
-            dispose();
-        } catch (SQLException ex){
-            System.out.println("Error SQL :v");
-            System.out.println(ex);
-        }*/
+        new VenAgenda(medico);
+        dispose();
+
     }//GEN-LAST:event_BtnAgendaActionPerformed
 
 

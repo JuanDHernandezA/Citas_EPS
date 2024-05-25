@@ -93,4 +93,3 @@ SELECT * FROM jornada_consultorio WHERE medico_id = '9999';
 
 
 
-

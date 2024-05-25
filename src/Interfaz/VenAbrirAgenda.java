@@ -248,16 +248,6 @@ public class VenAbrirAgenda extends javax.swing.JFrame {
                     }
                 }
             }
-
-            /* 
-            crear una cita 
-            enviando el id de la agenda recien creada
-            el id del medico
-            y la hora inicio y fin calculadas
-            enviar el id del estado activo
-            el paciente y hc el id sera 0 hasta que tengan la cita
-    
-             */
             //JOptionPane.showMessageDialog(null, "Paciente registrado correctamente", "Registrar paciente", JOptionPane.INFORMATION_MESSAGE, check);
             JOptionPane.showMessageDialog(null, "Agenda registrada correctamente", "Registrar Agenda", JOptionPane.INFORMATION_MESSAGE);
 

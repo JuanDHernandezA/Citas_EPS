@@ -28,15 +28,6 @@ public class Medico extends Usuario {
         this.jornada = jornada;
     }*/
     
-    public void abrir_agenda(){
-        
-    }
-    
-    public void atender_cita(){
-        
-    }
-
-
     public String getRegistro_profesional() {
         return registro_profesional;
     }

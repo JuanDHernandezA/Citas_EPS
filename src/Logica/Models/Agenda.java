@@ -18,6 +18,12 @@ public class Agenda {
     private LocalDate fecha_fin;
     private Medico medico;
 
+    public Agenda() {
+    }
+    public Agenda(int id) {
+        this.id = id;
+    }
+    
     public LocalDate getFecha_inicio() {
         return fecha_inicio;
     }

@@ -7,6 +7,7 @@ package Logica.DAO;
 import BD.ConexionBD;
 import Logica.Models.Agenda;
 import Logica.Models.Especialidad;
+import Logica.Models.Medico;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Date;
@@ -27,11 +28,21 @@ public class AgendaDAO {
         this.cn = new ConexionBD();
     }
 
-    public ResultSet obtenerAgenda(int id) throws SQLException {
-        PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM agenda WHERE id_agenda = ?");
-        pg.setInt(1, id);
+    public Agenda obtenerAgendaMed(Medico medico) throws SQLException {
+        
+        Agenda agenda = new Agenda();
+        
+        PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM agenda WHERE medico_id = ?");
+        pg.setString(1, medico.getIdentificacion());
         ResultSet rg = pg.executeQuery();
-        return rg;
+        
+        while (rg.next()) {
+            agenda.setId(rg.getInt("id_agenda"));
+            agenda.setFecha_inicio(rg.getDate("fecha_inicio_agenda").toLocalDate());
+            agenda.setFecha_fin(rg.getDate("fecha_fin_agenda").toLocalDate());
+            agenda.setMedico(medico);
+        }
+        return agenda;
     }
 
     public int insertarAgenda(Agenda agenda) throws SQLException {

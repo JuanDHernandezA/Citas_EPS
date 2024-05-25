@@ -97,6 +97,7 @@ public class JornadaConsultorioDAO {
                 jornada_consultorio.setMedico(new Medico(res.getString("medico_id")));
             }
 
+            
             return jornada_consultorio;
         } catch (Exception e) {
             System.out.println(e);

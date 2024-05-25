@@ -19,6 +19,10 @@ public class Sede {
     public Sede(){
         
     }
+
+    public Sede(int id) {
+        this.id = id;
+    }
     
     public Sede(int id, String nombre, String direccion) {
         this.id = id;

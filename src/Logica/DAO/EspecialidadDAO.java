@@ -28,8 +28,6 @@ public class EspecialidadDAO {
 
         List<Especialidad> sedes = new ArrayList<>();
 
-        
-        
         try {
             String statement = "SELECT * FROM especialidad";
             PreparedStatement pg = cn.getConexion().prepareStatement(statement);
@@ -47,15 +45,26 @@ public class EspecialidadDAO {
 
     }
 
-    public ResultSet obtenerEspecialidad(int id) throws SQLException {
-        PreparedStatement pg = cn.getConexion().prepareStatement("SELECT *"
-                + "FROM especialidad WHERE id_esp = ?");
+    public Especialidad obtenerEspecialidad(int id){
 
-        pg.setInt(1, id);
-        ResultSet rg = pg.executeQuery();
-        return rg;
+        Especialidad esp = new Especialidad();
+
+        try {
+            PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM especialidad WHERE id_esp = ?");
+            pg.setInt(1, id);
+            ResultSet res = pg.executeQuery();
+
+            while (res.next()) {
+                esp = new Especialidad(res.getInt("id_esp"), res.getString("nombre_esp"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+
+        return esp;
     }
-    
+
     public void insertarEspecialidad(Especialidad esp) throws SQLException {
         String statement = "INSERT INTO especialidad(nombre_esp) VALUES (?)";
         PreparedStatement pg = cn.getConexion().prepareStatement(statement);

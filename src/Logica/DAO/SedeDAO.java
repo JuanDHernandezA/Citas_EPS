@@ -44,6 +44,27 @@ public class SedeDAO {
 
     }
 
+    public Sede obtenerSede(int id) {
+
+        try {
+            Sede sede = new Sede();
+
+            String statement = "SELECT * FROM sede WHERE id_sede = ?";
+            PreparedStatement pg = cn.getConexion().prepareStatement(statement);
+            pg.setInt(1, id);
+            ResultSet res = pg.executeQuery();
+
+            while (res.next()) {
+                sede = new Sede(res.getInt("id_sede"), res.getString("nombre_sede"), res.getString("direccion"));
+            }
+            return sede;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+
+    }
+    
     public void insertarSede(Sede sede) throws SQLException {
         String statement = "INSERT INTO sede(nombre_sede,direccion) VALUES (?,?)";
         PreparedStatement pg = cn.getConexion().prepareStatement(statement);
