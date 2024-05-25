@@ -207,39 +207,10 @@ public class VenPedirCita extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnCancelarActionPerformed
 
     private void BtnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSolicitarActionPerformed
-        /*Icon check = new ImageIcon(getClass().getResource("/interfaz/Check.png"));
-        Icon cross = new ImageIcon(getClass().getResource("/interfaz/Cross.png"));
-        int copago = 0;
-        ResultSet usu = bd.obtenerPaciente(this.num);
-        while (usu.next()) {
-            if (usu.getString("k_id_categoria").equals("CAT1")) {
-                copago = 5000;
-            } else {
-                if (usu.getString("k_id_categoria").equals("CAT2")) {
-                    copago = 7000;
-                }
-            }
-        }
-        int fila_selec = this.TblCitas.getSelectedRow();
-        int id = Integer.parseInt(this.TblCitas.getModel().getValueAt(fila_selec, 0) + "");
-        System.out.println(id);
-        ResultSet cita = bd.obtenerCitasId(id);
-        while (cita.next()) {
-            bd.actualizarCita(this.getNum(), this.getTipo(), copago, "NO DISPONIBLE", cita.getInt("k_id_cita"));
-            JOptionPane.showMessageDialog(null, "Cita asignada", "Asignar cita médica", JOptionPane.INFORMATION_MESSAGE, check);
-            ResultSet res = bd.consultarCitaCop(cita.getInt("k_id_cita"));
-            while (res.next()) {
-                JOptionPane.showMessageDialog(null, "Su copago es: $" + res.getInt("q_copago"), "Info", 1);
-            }
-            MenuPaciente mp = new MenuPaciente();
-            mp.setVisible(true);
-            dispose();
-        }*/
-
+        
         Cita cita;
 
         try {
-
             int id = (int) tblCitas.getValueAt(tblCitas.getSelectedRow(), 4);
             cita = citaDAO.obtenerCita(id);
             citaDAO.insertarPaciente(cita, paciente);

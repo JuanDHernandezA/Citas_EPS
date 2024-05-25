@@ -73,9 +73,10 @@ public class VenConsulCita extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCitas = new javax.swing.JTable();
-        BtnCancelar = new javax.swing.JButton();
+        BtnVolver = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         BtnConsultar = new javax.swing.JButton();
+        BtnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,6 +99,11 @@ public class VenConsulCita extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblCitas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCitasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCitas);
         if (tblCitas.getColumnModel().getColumnCount() > 0) {
             tblCitas.getColumnModel().getColumn(0).setResizable(false);
@@ -106,10 +112,10 @@ public class VenConsulCita extends javax.swing.JFrame {
             tblCitas.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        BtnCancelar.setText("Volver al Menú");
-        BtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        BtnVolver.setText("Volver al Menú");
+        BtnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnCancelarActionPerformed(evt);
+                BtnVolverActionPerformed(evt);
             }
         });
 
@@ -117,9 +123,18 @@ public class VenConsulCita extends javax.swing.JFrame {
         jLabel2.setText("Citas Agendadas");
 
         BtnConsultar.setText("Consultar");
+        BtnConsultar.setEnabled(false);
         BtnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnConsultarActionPerformed(evt);
+            }
+        });
+
+        BtnCancelar.setText("Cancelar");
+        BtnCancelar.setEnabled(false);
+        BtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCancelarActionPerformed(evt);
             }
         });
 
@@ -131,8 +146,10 @@ public class VenConsulCita extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BtnCancelar)
+                        .addComponent(BtnVolver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BtnCancelar)
+                        .addGap(44, 44, 44)
                         .addComponent(BtnConsultar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -147,22 +164,61 @@ public class VenConsulCita extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnCancelar)
-                    .addComponent(BtnConsultar))
+                    .addComponent(BtnVolver)
+                    .addComponent(BtnConsultar)
+                    .addComponent(BtnCancelar))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
+    private void BtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVolverActionPerformed
         new VenMenuPaciente(paciente);
         dispose();
-    }//GEN-LAST:event_BtnCancelarActionPerformed
+    }//GEN-LAST:event_BtnVolverActionPerformed
 
     private void BtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsultarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnConsultarActionPerformed
+
+    private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
+        
+        Cita cita;
+
+        try {
+            int id = (int) tblCitas.getValueAt(tblCitas.getSelectedRow(), 5);
+            cita = citaDAO.obtenerCita(id);
+            citaDAO.cancelarCita(cita);
+            
+            citaDAO.insertarEstado(1, cita);
+            
+            JOptionPane.showMessageDialog(null, "Cita Cancelada", "Cancelar cita médica", JOptionPane.INFORMATION_MESSAGE);
+            
+            new VenMenuPaciente(paciente);
+            dispose();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Cita NO Cancelada", "Cancelar cita médica", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("error sql");
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_BtnCancelarActionPerformed
+
+    private void tblCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCitasMouseClicked
+        
+        if(tblCitas.getValueAt(tblCitas.getSelectedRow(), 4).equals("AGENDADA")){
+            BtnCancelar.setEnabled(true);
+        }else{
+            BtnCancelar.setEnabled(false);
+        }
+        
+        if(tblCitas.getValueAt(tblCitas.getSelectedRow(), 4).equals("FINALIZADA")){
+            BtnConsultar.setEnabled(true);
+        }else{
+            BtnConsultar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tblCitasMouseClicked
 
 
     private void insertarCitar() {
@@ -257,6 +313,7 @@ public class VenConsulCita extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCancelar;
     private javax.swing.JButton BtnConsultar;
+    private javax.swing.JButton BtnVolver;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCitas;

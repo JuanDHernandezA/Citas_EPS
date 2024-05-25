@@ -35,7 +35,6 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="BtnConsultar" max="32767" attributes="0"/>
                           <Component id="BtnPedir" max="32767" attributes="0"/>
-                          <Component id="BtnCancelar" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -50,11 +49,9 @@
               <Component id="txtTitulo" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="BtnPedir" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Component id="BtnConsultar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="BtnCancelar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -70,7 +67,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="BtnConsultar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Consultar Citas"/>
+        <Property name="text" type="java.lang.String" value="Consultar Mis Citas"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnConsultarActionPerformed"/>
@@ -84,14 +81,6 @@
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Bienvenido,"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="BtnCancelar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Cancelar Citas"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnCancelarActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

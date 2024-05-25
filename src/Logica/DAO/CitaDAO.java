@@ -136,6 +136,15 @@ public class CitaDAO {
         pg.close();
     }
     
+    public void cancelarCita(Cita cita) throws SQLException {
+        
+        String statement = "UPDATE cita SET paciente_id = null WHERE id_cita = ? ";
+        PreparedStatement pg = cn.getConexion().prepareStatement(statement);
+        pg.setInt(1, cita.getId());
+        pg.executeUpdate();
+        pg.close();
+    }
+    
     public void insertarEstado(int estado, Cita cita) throws SQLException {
         
         String statement = "UPDATE cita SET estado_id = ? WHERE id_cita = ? ";
