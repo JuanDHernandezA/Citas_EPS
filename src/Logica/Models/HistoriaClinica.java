@@ -32,6 +32,18 @@ public class HistoriaClinica {
     public String getTratamiento() {
         return tratamiento;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
+    }
+
+    public void setTratamiento(String tratamiento) {
+        this.tratamiento = tratamiento;
+    }
     
     
 }

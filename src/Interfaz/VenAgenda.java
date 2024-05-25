@@ -113,7 +113,7 @@ public class VenAgenda extends javax.swing.JFrame {
 
     public void tabla() {
 
-        DefaultTableModel model = new DefaultTableModel(){
+        DefaultTableModel model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -124,7 +124,7 @@ public class VenAgenda extends javax.swing.JFrame {
         model.addColumn("Hora Inicio");
         model.addColumn("Hora Fin");
         model.addColumn("Estado");
-        //model.addColumn("Atender");
+        model.addColumn("id");
 
         for (Cita cita : citas) {
 
@@ -134,7 +134,7 @@ public class VenAgenda extends javax.swing.JFrame {
                 }
             }
 
-            model.addRow(new Object[]{cita.getFecha(), cita.getHora_inicio(), cita.getHora_fin(), cita.getEstado().getEstado()});
+            model.addRow(new Object[]{cita.getFecha(), cita.getHora_inicio(), cita.getHora_fin(), cita.getEstado().getEstado(), cita.getId()});
         }
 
         tblCitas.setModel(model);
@@ -152,7 +152,8 @@ public class VenAgenda extends javax.swing.JFrame {
         this.tblCitas.getColumnModel().getColumn(1).setCellRenderer(tcr);
         this.tblCitas.getColumnModel().getColumn(2).setCellRenderer(tcr);
         this.tblCitas.getColumnModel().getColumn(3).setCellRenderer(tcr);
-
+        this.tblCitas.getColumnModel().getColumn(4).setMinWidth(0);
+        this.tblCitas.getColumnModel().getColumn(4).setMaxWidth(0);
         //tblCitas.getColumn("Atender").setCellRenderer(new ButtonRenderer());
         //tblCitas.getColumn("Atender").setCellEditor(new ButtonEditor(tblCitas));
     }
@@ -387,14 +388,26 @@ public class VenAgenda extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegresarActionPerformed
 
     private void btnAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtenderActionPerformed
-        // TODO add your handling code here:
+
+        try {
+            int id_cita = (int) tblCitas.getValueAt(tblCitas.getSelectedRow(), 4);
+            System.out.println(id_cita);
+            Cita c = citaDAO.obtenerCita(id_cita);
+            System.out.println(c.getPaciente().getIdentificacion());
+            new VenAtenderCita(c,medico);
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
     }//GEN-LAST:event_btnAtenderActionPerformed
 
     private void tblCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCitasMouseClicked
 
-        if(tblCitas.getValueAt(tblCitas.getSelectedRow(), 3).equals("AGENDADA")){
+        if (tblCitas.getValueAt(tblCitas.getSelectedRow(), 3).equals("AGENDADA")) {
             btnAtender.setEnabled(true);
-        }else{
+        } else {
             btnAtender.setEnabled(false);
         }
     }//GEN-LAST:event_tblCitasMouseClicked

@@ -90,8 +90,7 @@ WHERE medico.especialidad_id = 1 AND cita.estado_id = 1;
 
 --UPDATE cita SET paciente_id = ? WHERE id_cita = ? 
 
-
-
+z
 
 
 

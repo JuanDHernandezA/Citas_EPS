@@ -35,12 +35,12 @@ public class CitaDAO {
         List<Cita> citas = new ArrayList<>();
         
         try {
-            PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM cita WHERE agenda_id = ?");
+            PreparedStatement pg = cn.getConexion().prepareStatement("SELECT * FROM cita WHERE agenda_id = ? ORDER BY id_cita");
             pg.setInt(1, id);
             ResultSet rg = pg.executeQuery();
 
             while (rg.next()) {
-                citas.add(new Cita(rg.getDate("fecha_cita"), rg.getTime("hora_inicio").toLocalTime(), rg.getTime("hora_fin").toLocalTime(), new Estado(rg.getInt("estado_id")), null, new Agenda(rg.getInt("agenda_id")), null));
+                citas.add(new Cita(rg.getInt("id_cita"),rg.getDate("fecha_cita"), rg.getTime("hora_inicio").toLocalTime(), rg.getTime("hora_fin").toLocalTime(), new Estado(rg.getInt("estado_id")), null, new Agenda(rg.getInt("agenda_id")), null));
             }
             return citas;
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class CitaDAO {
             ResultSet rg = pg.executeQuery();
 
             while (rg.next()) {
-                cita = new Cita(rg.getInt("id_cita"),rg.getDate("fecha_cita"), rg.getTime("hora_inicio").toLocalTime(), rg.getTime("hora_fin").toLocalTime(), new Estado(rg.getInt("estado_id")), null, new Agenda(rg.getInt("agenda_id")), null);
+                cita = new Cita(rg.getInt("id_cita"),rg.getDate("fecha_cita"), rg.getTime("hora_inicio").toLocalTime(), rg.getTime("hora_fin").toLocalTime(), new Estado(rg.getInt("estado_id")), new Paciente(rg.getString("paciente_id")), new Agenda(rg.getInt("agenda_id")), null);
             }
             return cita;
         } catch (Exception e) {
@@ -150,6 +150,16 @@ public class CitaDAO {
         String statement = "UPDATE cita SET estado_id = ? WHERE id_cita = ? ";
         PreparedStatement pg = cn.getConexion().prepareStatement(statement);
         pg.setInt(1, estado);
+        pg.setInt(2, cita.getId());
+        pg.executeUpdate();
+        pg.close();
+    }
+    
+    public void insertarHC(int hc, Cita cita) throws SQLException {
+        
+        String statement = "UPDATE cita SET hc_id = ? WHERE id_cita = ? ";
+        PreparedStatement pg = cn.getConexion().prepareStatement(statement);
+        pg.setInt(1, hc);
         pg.setInt(2, cita.getId());
         pg.executeUpdate();
         pg.close();
