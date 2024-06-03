@@ -33,6 +33,8 @@ public class VenAtenderCita extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
 
+        this.medico = medico;
+        
         this.cita = cita;
 
         try {

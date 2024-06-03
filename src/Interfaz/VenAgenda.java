@@ -395,6 +395,7 @@ public class VenAgenda extends javax.swing.JFrame {
             Cita c = citaDAO.obtenerCita(id_cita);
             System.out.println(c.getPaciente().getIdentificacion());
             new VenAtenderCita(c,medico);
+            dispose();
             
         } catch (Exception e) {
             System.out.println(e);

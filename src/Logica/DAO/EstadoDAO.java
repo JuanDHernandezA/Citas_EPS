@@ -6,7 +6,6 @@ package Logica.DAO;
 
 import BD.ConexionBD;
 import Logica.Models.Estado;
-import Logica.Models.Genero;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;

@@ -5,7 +5,6 @@
 package Logica.Models;
 
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  *

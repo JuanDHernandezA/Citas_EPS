@@ -6,13 +6,11 @@ package Logica.DAO;
 
 import BD.ConexionBD;
 import Logica.Models.Agenda;
-import Logica.Models.Especialidad;
 import Logica.Models.Medico;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

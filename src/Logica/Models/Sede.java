@@ -4,8 +4,6 @@
  */
 package Logica.Models;
 
-import java.util.List;
-
 /**
  *
  * @author JDiego

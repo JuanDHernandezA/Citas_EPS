@@ -1,3 +1,4 @@
+--INSERTS
 INSERT INTO tipo_documento(nombre_tipo,abreviacion_tipo) values
 	('CEDULA DE CIUDADANIA','CC'),
 	('CEDULA DE EXTRANJERIA','CE'),
@@ -54,6 +55,39 @@ INSERT INTO jornada_consultorio(jornada_id,consultorio_id) values
 	(1,5),
 	(2,5);
 
+INSERT INTO medico VALUES
+	(1,'11111','Pedro','Perez','pp@gmail.com','5551234','1980-04-23','RM1',1,2);
+INSERT INTO medico VALUES
+	(1,'22222','Paula','Arenas','pa@gmail.com','5554321','1990-05-12','RM2',2,3);
+INSERT INTO medico VALUES
+	(2,'33333','Carlos','Castro','cc@gmail.com','5557788','1985-10-01','RM3',1,4);
+INSERT INTO medico VALUES
+	(1,'44444','Maria','Moreno','mm@gmail.com','5559900','1995-06-12','RM4',2,5);
+
+INSERT INTO public.agenda(fecha_inicio_agenda, fecha_fin_agenda, medico_id)
+	VALUES ('2024-06-01', '2024-07-01', '11111'),
+	('2024-06-01', '2024-07-01', '22222'),
+	('2024-06-01', '2024-07-01', '33333'),
+	('2024-06-01', '2024-07-01', '44444');
+
+UPDATE jornada_consultorio SET medico_id = 11111 WHERE jornada_id = 1 AND consultorio_id = 2;
+UPDATE jornada_consultorio SET medico_id = 22222 WHERE jornada_id = 2 AND consultorio_id = 3;
+UPDATE jornada_consultorio SET medico_id = 33333 WHERE jornada_id = 1 AND consultorio_id = 4;
+UPDATE jornada_consultorio SET medico_id = 44444 WHERE jornada_id = 2 AND consultorio_id = 5;
+
+INSERT INTO public.cita(
+	fecha_cita, hora_inicio, hora_fin, estado_id, agenda_id)
+	VALUES ('2024-06-07', '10:00:00', '10:20:00', 1, 1),
+			('2024-06-07', '11:00:00', '11:20:00', 1, 1),
+			('2024-06-08', '15:00:00', '15:20:00', 1, 2),
+			('2024-06-08', '15:20:00', '15:40:00', 1, 2),
+			('2024-06-08', '08:20:00', '08:40:00', 1, 3),
+			('2024-06-08', '08:40:00', '09:00:00', 1, 3),
+			('2024-06-09', '16:40:00', '17:00:00', 1, 4),
+			('2024-06-09', '17:00:00', '17:20:00', 1, 4);
+
+--SELECTS
+
 SELECT * FROM genero;
 SELECT * FROM estado;
 SELECT * FROM categoria;
@@ -88,9 +122,12 @@ INNER JOIN agenda ON cita.agenda_id = agenda.id_agenda
 INNER JOIN medico ON agenda.medico_id = medico.id_med
 WHERE medico.especialidad_id = 1 AND cita.estado_id = 1;
 
---UPDATE cita SET paciente_id = ? WHERE id_cita = ? 
+SELECT * FROM cita
+INNER JOIN agenda ON cita.agenda_id = agenda.id_agenda
+INNER JOIN medico ON agenda.medico_id = medico.id_med
+WHERE cita.estado_id = 1;
 
-z
+--UPDATE cita SET paciente_id = ? WHERE id_cita = ? 
 
 
 

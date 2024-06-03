@@ -28,19 +28,6 @@ public abstract class Usuario {
         this.identificacion = id;
     }
 
-    
-    
-    /*public Usuario(TipoDocumento td, String nombre, String apellido, String identificacion, String correo, String telefono, Date fecha_nacimiento, Genero genero) {
-        this.td = td;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.identificacion = identificacion;
-        this.correo = correo;
-        this.telefono = telefono;
-        this.fecha_nacimiento = fecha_nacimiento;
-        this.genero = genero;
-    }*/
-    
     public String getNombre() {
         return nombre;
     }

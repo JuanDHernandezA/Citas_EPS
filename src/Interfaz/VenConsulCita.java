@@ -198,7 +198,7 @@ public class VenConsulCita extends javax.swing.JFrame {
         Cita cita;
 
         try {
-            int id = (int) tblCitas.getValueAt(tblCitas.getSelectedRow(), 5);
+            int id = (int) tblCitas.getValueAt(tblCitas.getSelectedRow(), 6);
             cita = citaDAO.obtenerCita(id);
             citaDAO.cancelarCita(cita);
             
@@ -246,6 +246,7 @@ public class VenConsulCita extends javax.swing.JFrame {
         model.addColumn("Medico");
         model.addColumn("Consultorio");
         model.addColumn("Estado");
+        model.addColumn("Especialidad");
         model.addColumn("id");
 
         try {
@@ -255,6 +256,7 @@ public class VenConsulCita extends javax.swing.JFrame {
             cons = conDAO.obtenerConsultorios();
             sedes = sedeDAO.obtenerSedes();
             estados = estadoDAO.obtenerEstados();
+            especialidades = espDAO.obtenerEspecialidades();
 
             for (Cita cita : citas) {
 
@@ -272,8 +274,13 @@ public class VenConsulCita extends javax.swing.JFrame {
                 
                 for (Medico medico : medicos) {
                     if (cita.getAgenda().getMedico().getIdentificacion().equals(medico.getIdentificacion())) {
+                        
+                        for(Especialidad esp : especialidades){
+                            if(esp.getId() == medico.getEspecialidad().getId()){
+                                medico.setEspecialidad(esp);
+                            }
+                        }
                         cita.getAgenda().setMedico(medico);
-
                         jc = jcDAO.obtenerJCMed(medico);
                     }
                 }
@@ -292,7 +299,7 @@ public class VenConsulCita extends javax.swing.JFrame {
 
                 String x = "<html>" + jc.getConsultorio().getSede().getNombre() + "<br>Consultorio: " + jc.getConsultorio().getNumero() + "</html>";
 
-                model.addRow(new Object[]{cita.getFecha(), cita.getHora_inicio(), cita.getAgenda().getMedico().getNombre() + " " + cita.getAgenda().getMedico().getApellido(), x,cita.getEstado().getEstado(), cita.getId()});
+                model.addRow(new Object[]{cita.getFecha(), cita.getHora_inicio(), cita.getAgenda().getMedico().getNombre() + " " + cita.getAgenda().getMedico().getApellido(), x,cita.getEstado().getEstado(),cita.getAgenda().getMedico().getEspecialidad().getNombre(), cita.getId()});
             }
 
             tblCitas.setModel(model);
@@ -311,8 +318,10 @@ public class VenConsulCita extends javax.swing.JFrame {
             this.tblCitas.getColumnModel().getColumn(2).setCellRenderer(tcr);
             this.tblCitas.getColumnModel().getColumn(3).setCellRenderer(tcr);
             this.tblCitas.getColumnModel().getColumn(4).setCellRenderer(tcr);
-            this.tblCitas.getColumnModel().getColumn(5).setMinWidth(0);
-            this.tblCitas.getColumnModel().getColumn(5).setMaxWidth(0);
+            this.tblCitas.getColumnModel().getColumn(5).setCellRenderer(tcr);
+            this.tblCitas.getColumnModel().getColumn(6).setCellRenderer(tcr);
+            this.tblCitas.getColumnModel().getColumn(6).setMinWidth(0);
+            this.tblCitas.getColumnModel().getColumn(6).setMaxWidth(0);
 
         } catch (Exception e) {
             System.out.println(e);

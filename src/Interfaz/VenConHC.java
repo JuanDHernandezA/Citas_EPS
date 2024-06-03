@@ -10,9 +10,7 @@ import Logica.DAO.HCDAO;
 import Logica.DAO.PacienteDAO;
 import Logica.Models.Cita;
 import Logica.Models.HistoriaClinica;
-import Logica.Models.Medico;
 import Logica.Models.Paciente;
-import javax.swing.JOptionPane;
 
 /**
  *

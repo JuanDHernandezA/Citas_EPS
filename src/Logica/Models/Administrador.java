@@ -4,8 +4,6 @@
  */
 package Logica.Models;
 
-import java.util.Date;
-
 /**
  *
  * @author JDiego

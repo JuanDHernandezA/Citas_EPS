@@ -9,10 +9,7 @@ import Logica.DAO.MedicoDAO;
 import Logica.DAO.PacienteDAO;
 import Logica.Models.Medico;
 import Logica.Models.Paciente;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -70,16 +67,16 @@ public class VenMenuIngreso extends javax.swing.JFrame {
 
         jLabel3.setText("Ingresar como");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(50, 102, 170, 16);
+        jLabel3.setBounds(50, 120, 170, 16);
 
         BtnPaciente.setSelected(true);
         BtnPaciente.setText("Paciente");
         getContentPane().add(BtnPaciente);
-        BtnPaciente.setBounds(50, 130, 130, 21);
+        BtnPaciente.setBounds(90, 150, 130, 21);
 
         BtnMedico.setText("Médico");
         getContentPane().add(BtnMedico);
-        BtnMedico.setBounds(50, 163, 140, 21);
+        BtnMedico.setBounds(90, 180, 140, 21);
 
         BtnIngresar.setText("Ingresar");
         BtnIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -88,7 +85,7 @@ public class VenMenuIngreso extends javax.swing.JFrame {
             }
         });
         getContentPane().add(BtnIngresar);
-        BtnIngresar.setBounds(84, 202, 72, 23);
+        BtnIngresar.setBounds(50, 240, 90, 23);
 
         BtnAdmin.setText("Admin");
         BtnAdmin.addActionListener(new java.awt.event.ActionListener() {
@@ -97,7 +94,7 @@ public class VenMenuIngreso extends javax.swing.JFrame {
             }
         });
         getContentPane().add(BtnAdmin);
-        BtnAdmin.setBounds(156, 236, 72, 23);
+        BtnAdmin.setBounds(170, 240, 72, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -112,7 +109,7 @@ public class VenMenuIngreso extends javax.swing.JFrame {
                     new VenMenuMedico(m);
                     dispose();
                 } else {
-                    System.out.println("Ese usuario no existe...");
+                    JOptionPane.showMessageDialog(null, "El Usuario no Existe", "Ingresar", JOptionPane.INFORMATION_MESSAGE);
                 }
 
             } else if (BtnPaciente.isSelected()) {
@@ -123,7 +120,7 @@ public class VenMenuIngreso extends javax.swing.JFrame {
                     new VenMenuPaciente(p);
                     dispose();
                 } else {
-                    System.out.println("Ese usuario no existe...");
+                    JOptionPane.showMessageDialog(null, "El Usuario no Existe", "Ingresar", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
 
@@ -135,8 +132,7 @@ public class VenMenuIngreso extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnIngresarActionPerformed
 
     private void BtnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAdminActionPerformed
-        VenMenuAdmin ma = new VenMenuAdmin();
-        //ma.setVisible(true);
+        new VenMenuAdmin();
         dispose();
     }//GEN-LAST:event_BtnAdminActionPerformed
 

@@ -11,7 +11,6 @@ import Logica.Models.Especialidad;
 import Logica.Models.Estado;
 import Logica.Models.HistoriaClinica;
 import Logica.Models.Paciente;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

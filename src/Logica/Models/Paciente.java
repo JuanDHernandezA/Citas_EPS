@@ -4,8 +4,6 @@
  */
 package Logica.Models;
 
-import java.util.Date;
-
 /**
  *
  * @author JDiego
@@ -31,17 +29,5 @@ public class Paciente extends Usuario{
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
-    }
-    
-    public void pedir_cita(){
-        
-    }
-    
-    public void cancelar_cita(){
-        
-    }
-    
-    public void visualizar_citas(){
-        
     }
 }
